@@ -1,3 +1,6 @@
+<?php
+    $task = 'backlog';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -138,27 +141,29 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="backlog">
-              <div class="card card-info card-outline" data-task-id="1">
-                <div class="card-header">
-                  <h5 class="card-title">Зробити головну</h5>
-                  <div class="card-tools">
-                    <a href="#" class="btn btn-tool btn-link">#3</a>
-                    <a href="#" class="btn btn-tool">
-                      <i class="fas fa-pen"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <p>
-                    Зробити головну сторінку списку задач з можливістю перегляду,
-                    створення, редагування, видалення задач.
-                  </p>
-                  <a href="#" class="btn btn-tool">
-                    <i class="fas fa-file"></i>
-                  </a>
-                  <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                </div>
-              </div>
+                <?php if($task === 'backlog'): ?>
+                    <div class="card card-info card-outline" data-task-id="1">
+                        <div class="card-header">
+                          <h5 class="card-title">Зробити головну</h5>
+                          <div class="card-tools">
+                            <a href="#" class="btn btn-tool btn-link">#3</a>
+                            <a href="#" class="btn btn-tool">
+                              <i class="fas fa-pen"></i>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="card-body">
+                          <p>
+                            Зробити головну сторінку списку задач з можливістю перегляду,
+                            створення, редагування, видалення задач.
+                          </p>
+                          <a href="#" class="btn btn-tool">
+                            <i class="fas fa-file"></i>
+                          </a>
+                          <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
           </div>
           <div class="card card-row card-primary">
@@ -168,6 +173,9 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="to-do">
+                <?php if($task === 'to-do'): ?>
+
+                <?php endif; ?>
             </div>
           </div>
           <div class="card card-row card-default">
@@ -177,6 +185,9 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="in-progress">
+                <?php if($task === 'in-progress'): ?>
+
+                <?php endif; ?>
             </div>
           </div>
           <div class="card card-row card-success">
@@ -186,6 +197,9 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="done">
+                <?php if($task === 'done'): ?>
+
+                <?php endif; ?>
             </div>
           </div>
         </div>
