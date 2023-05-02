@@ -1,5 +1,45 @@
 <?php
-    $task = 'backlog';
+    $categories = ['Вхідні', 'Навчання', 'Робота', 'Домашні справи', 'Авто'];
+
+    $data = [
+        [
+                'title'      => 'Співбесіда в компанії',
+                'deadline'  => '01.07.2023',
+                'category'  => $categories[2],
+                'status'    => 'backlog'
+        ],
+        [
+                'title'      => 'Виконати тестове завдання',
+                'deadline'  => '25.07.2023',
+                'category'  => $categories[2],
+                'status'    => 'backlog'
+        ],
+        [
+                'title'      => 'Зробити завдання до першого уроку',
+                'deadline'  => '27.04.2023',
+                'category'  => $categories[1],
+                'status'    => 'done'
+        ],
+        [
+                'title'      => 'Зустрітись з друзями',
+                'deadline'  => '14.05.2023',
+                'category'  => $categories[0],
+                'status'    => 'to-do'
+        ],
+        [
+                'title'      => 'Купити корм для кота',
+                'deadline'  => null,
+                'category'  => $categories[3],
+                'status'    => 'in-progress'
+        ],
+        [
+                'title'      => 'Замовити піцу',
+                'deadline'  => null,
+                'category'  => $categories[3],
+                'status'    => 'to-do'
+        ],
+    ];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,15 +119,17 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item">
-              <a href="index.php" class="nav-link active">
-                <i class="nav-icon fas fa-columns"></i>
-                <p>
-                  Назва проекту
-                  <span class="badge badge-info right">2</span>
-                </p>
-              </a>
-            </li>
+            <?php foreach ($categories as $category): ?>
+              <li class="nav-item">
+                  <a href="index.php" class="nav-link <?php if($category === 'Вхідні'): echo 'active'; endif; ?>">
+                      <i class="nav-icon fas fa-columns"></i>
+                      <p>
+                          <?php echo $category ?>
+<!--                          <span class="badge badge-info right">2</span>-->
+                      </p>
+                  </a>
+              </li>
+            <?php endforeach; ?>
             <li class="nav-item">
               <a href="index.php" class="nav-link bg-olive">
                 <i class="nav-icon fas fa-plus"></i>
@@ -109,11 +151,11 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-6">
-              <h1>Назва проекту</h1>
+              <h1><?php echo $categories[0]; ?></h1>
             </div>
             <div class="col-sm-6 d-none d-sm-block">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item active">Назва проекту</li>
+                <li class="breadcrumb-item active"><?php echo $categories[0]; ?></li>
               </ol>
             </div>
           </div>
@@ -141,29 +183,39 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="backlog">
-                <?php if($task === 'backlog'): ?>
-                    <div class="card card-info card-outline" data-task-id="1">
-                        <div class="card-header">
-                          <h5 class="card-title">Зробити головну</h5>
-                          <div class="card-tools">
-                            <a href="#" class="btn btn-tool btn-link">#3</a>
-                            <a href="#" class="btn btn-tool">
-                              <i class="fas fa-pen"></i>
-                            </a>
-                          </div>
+                <?php foreach($data as $key => $task): ?>
+                    <?php if($task['status'] === 'backlog'): ?>
+                        <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card-header">
+                              <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                              <div class="card-tools">
+                                <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                <a href="#" class="btn btn-tool">
+                                  <i class="fas fa-pen"></i>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="card-body">
+                              <p>
+                                  <?php echo $task['title'] ?>
+                              </p>
+                              <a href="#" class="btn btn-tool">
+                                <i class="fas fa-file"></i>
+                              </a>
+                                <small class="badge badge-danger">
+                                    <i class="far fa-clock"></i>
+                                    <?php
+                                    if(!is_null($task['deadline'])):
+                                        echo $task['deadline'];
+                                    else:
+                                        echo '&#8734;';
+                                    endif;
+                                    ?>
+                                </small>
+                            </div>
                         </div>
-                        <div class="card-body">
-                          <p>
-                            Зробити головну сторінку списку задач з можливістю перегляду,
-                            створення, редагування, видалення задач.
-                          </p>
-                          <a href="#" class="btn btn-tool">
-                            <i class="fas fa-file"></i>
-                          </a>
-                          <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
           </div>
           <div class="card card-row card-primary">
@@ -173,9 +225,39 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="to-do">
-                <?php if($task === 'to-do'): ?>
-
-                <?php endif; ?>
+                <?php foreach($data as $key => $task): ?>
+                    <?php if($task['status'] === 'to-do'): ?>
+                        <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card-header">
+                                <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                                <div class="card-tools">
+                                    <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                    <a href="#" class="btn btn-tool">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    <?php echo $task['title'] ?>
+                                </p>
+                                <a href="#" class="btn btn-tool">
+                                    <i class="fas fa-file"></i>
+                                </a>
+                                <small class="badge badge-danger">
+                                    <i class="far fa-clock"></i>
+                                    <?php
+                                    if(!is_null($task['deadline'])):
+                                        echo $task['deadline'];
+                                    else:
+                                        echo '&#8734;';
+                                    endif;
+                                    ?>
+                                </small>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
           </div>
           <div class="card card-row card-default">
@@ -185,9 +267,39 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="in-progress">
-                <?php if($task === 'in-progress'): ?>
-
-                <?php endif; ?>
+                <?php foreach($data as $key => $task): ?>
+                    <?php if($task['status'] === 'in-progress'): ?>
+                        <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card-header">
+                                <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                                <div class="card-tools">
+                                    <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                    <a href="#" class="btn btn-tool">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    <?php echo $task['title'] ?>
+                                </p>
+                                <a href="#" class="btn btn-tool">
+                                    <i class="fas fa-file"></i>
+                                </a>
+                                <small class="badge badge-danger">
+                                    <i class="far fa-clock"></i>
+                                    <?php
+                                    if(!is_null($task['deadline'])):
+                                        echo $task['deadline'];
+                                    else:
+                                        echo '&#8734;';
+                                    endif;
+                                    ?>
+                                </small>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
           </div>
           <div class="card card-row card-success">
@@ -197,9 +309,39 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="done">
-                <?php if($task === 'done'): ?>
-
-                <?php endif; ?>
+                <?php foreach($data as $key => $task): ?>
+                    <?php if($task['status'] === 'done'): ?>
+                        <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card-header">
+                                <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                                <div class="card-tools">
+                                    <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                    <a href="#" class="btn btn-tool">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    <?php echo $task['title'] ?>
+                                </p>
+                                <a href="#" class="btn btn-tool">
+                                    <i class="fas fa-file"></i>
+                                </a>
+                                <small class="badge badge-danger">
+                                    <i class="far fa-clock"></i>
+                                    <?php
+                                        if(!is_null($task['deadline'])):
+                                            echo $task['deadline'];
+                                        else:
+                                            echo '&#8734;';
+                                        endif;
+                                    ?>
+                                </small>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
           </div>
         </div>
