@@ -40,6 +40,21 @@
         ],
     ];
 
+    function countTasks(array $getData, string $projectName): int
+    {
+        $sortedData = [];
+
+        foreach ($getData as ['category' => $category])
+        {
+            if ($category === $projectName)
+            {
+                $sortedData[] = $projectName;
+            }
+        }
+
+        return count($sortedData);
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,11 +136,13 @@
                with font-awesome or any other icon font library -->
             <?php foreach ($categories as $category): ?>
               <li class="nav-item">
-                  <a href="index.php" class="nav-link <?php if($category === 'Вхідні'): echo 'active'; endif; ?>">
+                  <a href="index.php" class="nav-link <?php echo ($category === 'Вхідні') ? 'active' : '' ?>">
                       <i class="nav-icon fas fa-columns"></i>
                       <p>
                           <?php echo $category ?>
-<!--                          <span class="badge badge-info right">2</span>-->
+                          <span class="badge badge-info right">
+                              <?php echo countTasks($data, $category) ?>
+                          </span>
                       </p>
                   </a>
               </li>
