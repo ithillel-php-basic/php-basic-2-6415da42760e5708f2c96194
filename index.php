@@ -42,19 +42,52 @@
         ],
     ];
 
+
+    /**
+     * Підраховує кількість завдань, які належать по певного проєкту.
+     *
+     * @param array $getData
+     * @param string $projectName
+     * @return int
+     */
     function countTasks(array $getData, string $projectName): int
     {
-        $sortedData = [];
+        $counter = 0;
 
         foreach ($getData as ['category' => $category])
         {
             if ($category === $projectName)
             {
-                $sortedData[] = $projectName;
+                $counter++;
             }
         }
 
-        return count($sortedData);
+        return $counter;
+    }
+
+
+    /**
+     * Показує скільки залишилось днів та годин до вказаної дати.
+     *
+     * @param string $date
+     * @return string
+     */
+    function getTimeRemain(string $date): string
+    {
+        $diff = strtotime($date) - time();
+        $diff = max($diff, 0);
+
+        $days = floor($diff/(60*60*24));
+        $hours = floor(($diff-$days*60*60*24)/(60*60));
+
+        if ($diff <= 86400)
+        {
+            $checkPerDay = ($diff === 86400 ? $hours = 24 : $hours);
+            return '<small class="badge badge-danger" title="'.$date.'"><i class="far fa-clock"></i> '. $checkPerDay .' год </small>';
+        }
+
+        return '<small class="badge badge-success" title="'.$date.'"><i class="far fa-clock"></i> '. $days .' дн : '.$hours.' год </small>';
+
     }
 
     $userName = 'Володимир';
@@ -75,4 +108,4 @@
     ]);
 ?>
 
-<?= renderTemplate('layout.php', ['title' => $title, 'body' => $body]) ?>
+<?php echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]) ?>
