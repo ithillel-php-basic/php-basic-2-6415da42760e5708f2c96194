@@ -106,6 +106,5 @@
         'userPhoto'         => $userPhoto,
         'data'              => $data,
     ]);
-?>
 
-<?php echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]) ?>
+    echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]);
