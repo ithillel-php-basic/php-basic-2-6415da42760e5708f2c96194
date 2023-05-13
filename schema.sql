@@ -1,5 +1,4 @@
-CREATE
-DATABASE `tasks_and_projects`;
+CREATE DATABASE `tasks_and_projects`;
 
 CREATE TABLE `tasks_and_projects`.`users`
 (
