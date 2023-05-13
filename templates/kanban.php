@@ -9,11 +9,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1><?= htmlspecialchars($categories[0]) ?></h1>
+                    <h1><?php echo htmlspecialchars($categories[0]) ?></h1>
                 </div>
                 <div class="col-sm-6 d-none d-sm-block">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active"><?= htmlspecialchars($categories[0]) ?></li>
+                        <li class="breadcrumb-item active"><?php echo htmlspecialchars($categories[0]) ?></li>
                     </ol>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         <?php if($task['status'] === 'backlog'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?= htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -55,21 +55,16 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?= htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
-                                    <small class="badge badge-danger">
-                                        <i class="far fa-clock"></i>
-                                        <?php
-                                        if(!is_null($task['deadline'])):
-                                            echo $task['deadline'];
-                                        else:
-                                            echo '&#8734;';
-                                        endif;
-                                        ?>
-                                    </small>
+                                    <?php
+                                    if (!is_null($task['deadline'])):
+                                        echo getTimeRemain($task['deadline']);
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -87,7 +82,7 @@
                         <?php if($task['status'] === 'to-do'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?= htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -97,21 +92,16 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?= htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
-                                    <small class="badge badge-danger">
-                                        <i class="far fa-clock"></i>
-                                        <?php
-                                        if(!is_null($task['deadline'])):
-                                            echo $task['deadline'];
-                                        else:
-                                            echo '&#8734;';
-                                        endif;
-                                        ?>
-                                    </small>
+                                    <?php
+                                    if (!is_null($task['deadline'])):
+                                        echo getTimeRemain($task['deadline']);
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -129,7 +119,7 @@
                         <?php if($task['status'] === 'in-progress'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?= htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -139,21 +129,16 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?= htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
-                                    <small class="badge badge-danger">
-                                        <i class="far fa-clock"></i>
-                                        <?php
-                                        if(!is_null($task['deadline'])):
-                                            echo $task['deadline'];
-                                        else:
-                                            echo '&#8734;';
-                                        endif;
-                                        ?>
-                                    </small>
+                                    <?php
+                                    if (!is_null($task['deadline'])):
+                                        echo getTimeRemain($task['deadline']);
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -171,7 +156,7 @@
                         <?php if($task['status'] === 'done'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?= htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -181,21 +166,16 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?= htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
-                                    <small class="badge badge-danger">
-                                        <i class="far fa-clock"></i>
-                                        <?php
-                                        if(!is_null($task['deadline'])):
-                                            echo $task['deadline'];
-                                        else:
-                                            echo '&#8734;';
-                                        endif;
-                                        ?>
-                                    </small>
+                                    <?php
+                                    if (!is_null($task['deadline'])):
+                                        echo getTimeRemain($task['deadline']);
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         <?php endif; ?>

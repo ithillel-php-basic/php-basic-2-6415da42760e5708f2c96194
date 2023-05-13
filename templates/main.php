@@ -49,10 +49,10 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="<?= $userPhoto ?>" class="img-circle elevation-2" alt="User Image">
+                    <img src="<?php echo $userPhoto ?>" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"><?= $userName ?></a>
+                    <a href="#" class="d-block"><?php echo $userName ?></a>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                             <a href="../index.php" class="nav-link <?php echo ($category === 'Вхідні') ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>
-                                    <?= htmlspecialchars($category) ?>
+                                    <?php echo htmlspecialchars($category) ?>
                                     <span class="badge badge-info right">
                               <?php echo countTasks($data, $category) ?>
                           </span>
@@ -90,7 +90,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <?= $kanbanTemplate ?>
+    <?php echo $kanbanTemplate ?>
 
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
