@@ -143,3 +143,71 @@ function renderTemplate($name, array $data = []) {
 
     return $result;
 }
+
+
+/**
+ * Підраховує кількість завдань, які належать по певного проєкту.
+ *
+ * @param array $getData
+ * @param string $projectName
+ * @return int
+ */
+function countTasks(array $getData, string $projectName): int
+{
+    $counter = 0;
+
+    foreach ($getData as ['project_title' => $title])
+    {
+        if ($title === $projectName)
+        {
+            $counter++;
+        }
+    }
+
+    return $counter;
+}
+
+
+/**
+ * Показує скільки залишилось днів та годин до вказаної дати.
+ *
+ * @param string $date
+ * @return string
+ */
+function getTimeRemain(string $date): string
+{
+    $diff = strtotime($date) - time();
+    $diff = max($diff, 0);
+
+    $days = floor($diff/(60*60*24));
+    $hours = floor(($diff-$days*60*60*24)/(60*60));
+
+    if ($diff <= 86400)
+    {
+        $checkPerDay = ($diff === 86400 ? $hours = 24 : $hours);
+        return '<small class="badge badge-danger" title="'.$date.'"><i class="far fa-clock"></i> '. $checkPerDay .' год </small>';
+    }
+
+    return '<small class="badge badge-success" title="'.$date.'"><i class="far fa-clock"></i> '. $days .' дн : '.$hours.' год </small>';
+
+}
+
+
+/**
+ * Виводить дані з таблички згідно з SQL запиту та конвертує їх в асоціативний масив.
+ *
+ * @param $sql_connect
+ * @param $query
+ * @return array
+ */
+function getQuery($sql_connect, $query) : array
+{
+    $result = mysqli_query($sql_connect, $query);
+
+    if ($result === false)
+    {
+        die(mysqli_error($sql_connect));
+    }
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}

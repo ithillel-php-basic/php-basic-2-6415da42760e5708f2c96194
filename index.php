@@ -1,110 +1,40 @@
 <?php
     require_once 'helpers.php';
 
-    $categories = ['Вхідні', 'Навчання', 'Робота', 'Домашні справи', 'Авто'];
+    $db_connection = mysqli_connect('127.0.0.1', 'root', '', 'tasks_and_projects');
 
-    $data = [
-        [
-                'title'     => 'Співбесіда в компанії',
-                'deadline'  => '01.07.2023',
-                'category'  => $categories[2],
-                'status'    => 'backlog'
-        ],
-        [
-                'title'     => 'Виконати тестове завдання',
-                'deadline'  => '25.07.2023',
-                'category'  => $categories[2],
-                'status'    => 'backlog'
-        ],
-        [
-                'title'     => 'Зробити завдання до першого уроку',
-                'deadline'  => '27.04.2023',
-                'category'  => $categories[1],
-                'status'    => 'done'
-        ],
-        [
-                'title'     => 'Зустрітись з друзями',
-                'deadline'  => '14.05.2023',
-                'category'  => $categories[0],
-                'status'    => 'to-do'
-        ],
-        [
-                'title'     => 'Купити корм для кота',
-                'deadline'  => null,
-                'category'  => $categories[3],
-                'status'    => 'in-progress'
-        ],
-        [
-                'title'     => 'Замовити піцу',
-                'deadline'  => null,
-                'category'  => $categories[3],
-                'status'    => 'to-do'
-        ],
-    ];
-
-
-    /**
-     * Підраховує кількість завдань, які належать по певного проєкту.
-     *
-     * @param array $getData
-     * @param string $projectName
-     * @return int
-     */
-    function countTasks(array $getData, string $projectName): int
+    if ($db_connection === false)
     {
-        $counter = 0;
-
-        foreach ($getData as ['category' => $category])
-        {
-            if ($category === $projectName)
-            {
-                $counter++;
-            }
-        }
-
-        return $counter;
+        die('Fail to connect!');
     }
 
+    $tasksQuery = 'SELECT t.id, t.title, t.description, p.title as project_title, t.deadline, t.file, t.status, t.created_at
+                   FROM tasks AS t 
+                   LEFT JOIN projects AS p 
+                       ON t.project_id = p.id
+                   WHERE p.user_id = 1
+                   GROUP BY t.id';
 
-    /**
-     * Показує скільки залишилось днів та годин до вказаної дати.
-     *
-     * @param string $date
-     * @return string
-     */
-    function getTimeRemain(string $date): string
-    {
-        $diff = strtotime($date) - time();
-        $diff = max($diff, 0);
+    $tasks = getQuery($db_connection, $tasksQuery);
+    $projects = getQuery($db_connection, 'SELECT * FROM projects WHERE user_id = 1');
+    $pageTitle = getQuery($db_connection, 'SELECT title FROM projects WHERE title = \'Вхідні\' AND user_id = 1');
 
-        $days = floor($diff/(60*60*24));
-        $hours = floor(($diff-$days*60*60*24)/(60*60));
-
-        if ($diff <= 86400)
-        {
-            $checkPerDay = ($diff === 86400 ? $hours = 24 : $hours);
-            return '<small class="badge badge-danger" title="'.$date.'"><i class="far fa-clock"></i> '. $checkPerDay .' год </small>';
-        }
-
-        return '<small class="badge badge-success" title="'.$date.'"><i class="far fa-clock"></i> '. $days .' дн : '.$hours.' год </small>';
-
-    }
-
-    $userName = 'Володимир';
+    $userName = getQuery($db_connection, 'SELECT name FROM users WHERE id = 1');
     $userPhoto = 'static/img/user2-160x160.jpg';
 
     $kanbanTemplate = renderTemplate('kanban.php', [
-        'data'          => $data,
-        'categories'    => $categories,
+        'tasks'         => $tasks,
+        'projects'      => $projects,
+        'pageTitle'     => $pageTitle[0]['title'] ?? '',
     ]);
 
     $title = 'Завдання та проекти | Дошка';
     $body = renderTemplate('main.php', [
         'kanbanTemplate'    => $kanbanTemplate,
-        'categories'        => $categories,
-        'userName'          => $userName,
+        'projects'          => $projects,
+        'userName'          => $userName[0]['name'] ?? '',
         'userPhoto'         => $userPhoto,
-        'data'              => $data,
+        'tasks'             => $tasks,
     ]);
 
     echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]);
