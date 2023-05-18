@@ -45,7 +45,7 @@
                         <?php if($task['status'] === 'backlog'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -82,7 +82,7 @@
                         <?php if($task['status'] === 'to-do'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -119,7 +119,7 @@
                         <?php if($task['status'] === 'in-progress'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -156,7 +156,7 @@
                         <?php if($task['status'] === 'done'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo 'Завдання #'.$key ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
