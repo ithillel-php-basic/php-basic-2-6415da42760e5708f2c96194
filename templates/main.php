@@ -52,7 +52,7 @@
                     <img src="<?php echo $userPhoto ?>" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"><?php echo $userName ?></a>
+                    <a href="#" class="d-block"><?php echo htmlspecialchars($userName) ?></a>
                 </div>
             </div>
 

@@ -9,11 +9,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1><?php echo $pageTitle ?></h1>
+                    <h1><?php echo htmlspecialchars($pageTitle) ?></h1>
                 </div>
                 <div class="col-sm-6 d-none d-sm-block">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active"><?php echo $pageTitle ?></li>
+                        <li class="breadcrumb-item active"><?php echo htmlspecialchars($pageTitle) ?></li>
                     </ol>
                 </div>
             </div>
