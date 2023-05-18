@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo $task['title'] ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo $task['title'] ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo $task['title'] ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo $task['title'] ?>
+                                        <?php echo htmlspecialchars($task['title']) ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>

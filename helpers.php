@@ -146,29 +146,6 @@ function renderTemplate($name, array $data = []) {
 
 
 /**
- * Підраховує кількість завдань, які належать по певного проєкту.
- *
- * @param array $getData
- * @param string $projectName
- * @return int
- */
-function countTasks(array $getData, string $projectName): int
-{
-    $counter = 0;
-
-    foreach ($getData as ['project_title' => $title])
-    {
-        if ($title === $projectName)
-        {
-            $counter++;
-        }
-    }
-
-    return $counter;
-}
-
-
-/**
  * Показує скільки залишилось днів та годин до вказаної дати.
  *
  * @param string $date

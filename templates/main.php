@@ -66,9 +66,9 @@
                             <a href="../index.php" class="nav-link <?php echo ($project['title'] === 'Вхідні') ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>
-                                    <?php echo $project['title'] ?>
+                                    <?php echo htmlspecialchars($project['title']) ?>
                                     <span class="badge badge-info right">
-                              <?php echo countTasks($tasks, $project['title']) ?>
+                              <?php echo $project['countTasks'] ?>
                           </span>
                                 </p>
                             </a>
