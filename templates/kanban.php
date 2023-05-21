@@ -1,7 +1,7 @@
 <?php
 /**
- * @var array $categories
- * @var array $data
+ * @var array $tasks
+ * @var string $pageTitle
  */
 ?>
 <div class="content-wrapper kanban">
@@ -9,11 +9,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1><?php echo htmlspecialchars($categories[0]) ?></h1>
+                    <h1><?php echo htmlspecialchars($pageTitle) ?></h1>
                 </div>
                 <div class="col-sm-6 d-none d-sm-block">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active"><?php echo htmlspecialchars($categories[0]) ?></li>
+                        <li class="breadcrumb-item active"><?php echo htmlspecialchars($pageTitle) ?></li>
                     </ol>
                 </div>
             </div>
@@ -41,11 +41,11 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="backlog">
-                    <?php foreach($data as $key => $task): ?>
+                    <?php foreach($tasks as $key => $task): ?>
                         <?php if($task['status'] === 'backlog'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -78,11 +78,11 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="to-do">
-                    <?php foreach($data as $key => $task): ?>
+                    <?php foreach($tasks as $key => $task): ?>
                         <?php if($task['status'] === 'to-do'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -115,11 +115,11 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="in-progress">
-                    <?php foreach($data as $key => $task): ?>
+                    <?php foreach($tasks as $key => $task): ?>
                         <?php if($task['status'] === 'in-progress'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
@@ -152,11 +152,11 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="done">
-                    <?php foreach($data as $key => $task): ?>
+                    <?php foreach($tasks as $key => $task): ?>
                         <?php if($task['status'] === 'done'): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
-                                    <h5 class="card-title"><?php echo htmlspecialchars('Завдання #'.$key) ?></h5>
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
                                         <a href="#" class="btn btn-tool">
@@ -166,16 +166,11 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['title']) ?>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
                                     <a href="#" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
-                                    <?php
-                                    if (!is_null($task['deadline'])):
-                                        echo getTimeRemain($task['deadline']);
-                                    endif;
-                                    ?>
                                 </div>
                             </div>
                         <?php endif; ?>

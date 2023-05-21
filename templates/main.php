@@ -2,8 +2,8 @@
 /**
  * @var string $userPhoto
  * @var string $userName
- * @var array $categories
- * @var array $data
+ * @var array $projects
+ * @var array $tasks
  * @var resource $kanbanTemplate
  */
 ?>
@@ -52,7 +52,7 @@
                     <img src="<?php echo $userPhoto ?>" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"><?php echo $userName ?></a>
+                    <a href="#" class="d-block"><?php echo htmlspecialchars($userName) ?></a>
                 </div>
             </div>
 
@@ -61,14 +61,14 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                        with font-awesome or any other icon font library -->
-                    <?php foreach ($categories as $category): ?>
+                    <?php foreach ($projects as $project): ?>
                         <li class="nav-item">
-                            <a href="../index.php" class="nav-link <?php echo ($category === 'Вхідні') ? 'active' : '' ?>">
+                            <a href="../index.php" class="nav-link <?php echo ($project['title'] === 'Вхідні') ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>
-                                    <?php echo htmlspecialchars($category) ?>
+                                    <?php echo htmlspecialchars($project['title']) ?>
                                     <span class="badge badge-info right">
-                              <?php echo countTasks($data, $category) ?>
+                              <?php echo $project['countTasks'] ?>
                           </span>
                                 </p>
                             </a>
