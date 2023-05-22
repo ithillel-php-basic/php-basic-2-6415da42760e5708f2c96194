@@ -3,6 +3,7 @@
  * @var array $tasks
  * @var string $pageTitle
  */
+
 ?>
 <div class="content-wrapper kanban">
     <section class="content-header">
@@ -42,7 +43,34 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="backlog">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'backlog'): ?>
+                        <?php if($task['status'] === 'backlog' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                                <div class="card-header">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
+                                    <div class="card-tools">
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
+                                    </p>
+                                    <a href="#" class="btn btn-tool">
+                                        <i class="fas fa-file"></i>
+                                    </a>
+                                    <?php
+                                    if (!is_null($task['deadline'])):
+                                        echo getTimeRemain($task['deadline']);
+                                    endif;
+                                    ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($task['status'] === 'backlog' && !isset($_GET['project_id'])): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -79,7 +107,34 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="to-do">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'to-do'): ?>
+                        <?php if($task['status'] === 'to-do' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                                <div class="card-header">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
+                                    <div class="card-tools">
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
+                                    </p>
+                                    <a href="#" class="btn btn-tool">
+                                        <i class="fas fa-file"></i>
+                                    </a>
+                                    <?php
+                                    if (!is_null($task['deadline'])):
+                                        echo getTimeRemain($task['deadline']);
+                                    endif;
+                                    ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($task['status'] === 'to-do' && !isset($_GET['project_id'])): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -116,12 +171,39 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="in-progress">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'in-progress'): ?>
+                        <?php if($task['status'] === 'in-progress' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                        <a href="#" class="btn btn-tool">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
+                                    </p>
+                                    <a href="#" class="btn btn-tool">
+                                        <i class="fas fa-file"></i>
+                                    </a>
+                                    <?php
+                                    if (!is_null($task['deadline'])):
+                                        echo getTimeRemain($task['deadline']);
+                                    endif;
+                                    ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($task['status'] === 'in-progress' && !isset($_GET['project_id'])): ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                                <div class="card-header">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
+                                    <div class="card-tools">
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -153,12 +235,34 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="done">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'done'): ?>
+                        <?php if($task['status'] === 'done' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                        <a href="#" class="btn btn-tool">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
+                                    </p>
+                                    <a href="#" class="btn btn-tool">
+                                        <i class="fas fa-file"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($task['status'] === 'done' && !isset($_GET['project_id'])): ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                                <div class="card-header">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
+                                    <div class="card-tools">
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>

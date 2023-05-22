@@ -188,3 +188,47 @@ function getQuery($sql_connect, $query) : array
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+/**
+ * Виводить назву проєкту згідно з активним пунктом меню.
+ *
+ * @param array $data
+ * @return string
+ */
+function pageTitle(array $data): string
+{
+    foreach ($data as $project)
+    {
+        if (isset($_GET['project_id']) && $project['id'] === $_GET['project_id'])
+        {
+            return $project['title'];
+        }
+    }
+    return 'Всі';
+}
+
+/**
+ * Перевірка на наявність проєкту.
+ *
+ * @param array $data
+ * @return bool|int|void
+ */
+function isProjectExists(array $data)
+{
+    foreach ($data as $project)
+    {
+        if (isset($_GET['project_id']) && $project['id'] === $_GET['project_id'])
+        {
+            return http_response_code(200);
+        }
+    }
+
+    if (!isset($_GET['project_id']))
+    {
+        return http_response_code(200);
+    }
+
+    http_response_code(404);
+    include('templates/404.php');
+    exit();
+}

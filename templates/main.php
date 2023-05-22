@@ -6,6 +6,8 @@
  * @var array $tasks
  * @var resource $kanbanTemplate
  */
+
+
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -61,15 +63,37 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                        with font-awesome or any other icon font library -->
-                    <?php foreach ($projects as $project): ?>
+                    <?php foreach ($projects as $key => $project): ?>
+                    <?php if ($key === array_key_first($projects)): ?>
                         <li class="nav-item">
-                            <a href="../index.php" class="nav-link <?php echo ($project['title'] === 'Вхідні') ? 'active' : '' ?>">
+                            <a href="/"
+                               class="nav-link <?php echo (!isset($_GET['project_id'])) ? 'active' : ''; ?>"
+                            >
+                                <i class="nav-icon fas fa-columns"></i>
+                                <p>
+                                    Всі
+                                    <span class="badge badge-info right">
+                                    <?php echo count($tasks) ?>
+                                </span>
+                                </p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                        <li class="nav-item">
+                            <a href="/?project_id=<?php echo urlencode($project['id']) ?>"
+                               class="nav-link
+                               <?php
+                                   if (isset($_GET['project_id'])):
+                                        echo ($project['id'] === $_GET['project_id']) ? 'active' : '';
+                                   endif;
+                               ?>"
+                            >
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>
                                     <?php echo htmlspecialchars($project['title']) ?>
-                                    <span class="badge badge-info right">
-                              <?php echo $project['countTasks'] ?>
-                          </span>
+                                <span class="badge badge-info right">
+                                    <?php echo $project['countTasks'] ?>
+                                </span>
                                 </p>
                             </a>
                         </li>

@@ -10,7 +10,7 @@
 
     const USER_ID = 1;
 
-    $tasksQuery = 'SELECT t.id, t.title, t.description, p.title as project_title, t.deadline, t.file, t.status, t.created_at
+    $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
                    FROM tasks AS t 
                    LEFT JOIN projects AS p 
                        ON t.project_id = p.id
@@ -30,10 +30,12 @@
     $userName = getQuery($db_connection, 'SELECT name FROM users WHERE id = '.USER_ID);
     $userPhoto = 'static/img/user2-160x160.jpg';
 
+    isProjectExists($projects);
+
     $kanbanTemplate = renderTemplate('kanban.php', [
         'tasks'         => $tasks,
         'projects'      => $projects,
-        'pageTitle'     => $projects[0]['title'] ?? '',
+        'pageTitle'     => pageTitle($projects),
     ]);
 
     $title = 'Завдання та проекти | Дошка';
