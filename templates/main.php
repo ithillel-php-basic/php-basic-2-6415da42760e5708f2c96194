@@ -5,9 +5,8 @@
  * @var array $projects
  * @var array $tasks
  * @var resource $kanbanTemplate
- * @var string $countTotalTasks
+ * @var string|null $projectId
  */
-
 
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -68,13 +67,13 @@
                     <?php if ($key === array_key_first($projects)): ?>
                         <li class="nav-item">
                             <a href="/"
-                               class="nav-link <?php echo (!isset($_GET['project_id'])) ? 'active' : ''; ?>"
+                               class="nav-link <?php echo (!isset($projectId)) ? 'active' : ''; ?>"
                             >
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>
                                     Всі
                                     <span class="badge badge-info right">
-                                    <?php echo $countTotalTasks; ?>
+                                    <?php echo array_sum(array_column($projects, 'countTasks')); ?>
                                 </span>
                                 </p>
                             </a>
@@ -84,8 +83,8 @@
                             <a href="/?project_id=<?php echo urlencode($project['id']) ?>"
                                class="nav-link
                                <?php
-                                   if (isset($_GET['project_id'])):
-                                        echo ($project['id'] === $_GET['project_id']) ? 'active' : '';
+                                   if (isset($projectId)):
+                                        echo ($project['id'] === $projectId) ? 'active' : '';
                                    endif;
                                ?>"
                             >

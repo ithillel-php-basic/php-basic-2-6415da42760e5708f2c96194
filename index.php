@@ -8,29 +8,21 @@
         die('Fail to connect!');
     }
 
+    mysqli_set_charset($db_connection, 'utf8');
+
     const USER_ID = 1;
+    $projectId = $_GET['project_id'] ?? null;
 
-    if (!isset($_GET['project_id']))
-    {
-        $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
-                       FROM tasks AS t 
-                       LEFT JOIN projects AS p 
-                           ON t.project_id = p.id
-                       WHERE p.user_id = '.USER_ID.'
-                       GROUP BY t.id';
-
-    } else {
-        $countTasksQuery = 'SELECT count(*) FROM tasks WHERE user_id = '.USER_ID;
-        $countTotalTasks = getQuery($db_connection, $countTasksQuery);
-
-        $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
-                       FROM tasks AS t
-                       LEFT JOIN projects AS p
-                           ON t.project_id = p.id
-                       WHERE p.user_id = '.USER_ID.'
-                       AND t.project_id = '.$_GET['project_id'].'
-                       GROUP BY t.id';
-    }
+    $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
+                   FROM tasks AS t
+                   LEFT JOIN projects AS p
+                       ON t.project_id = p.id
+                   WHERE p.user_id = '.USER_ID;
+                   if (isset($projectId))
+                   {
+                       $tasksQuery .= ' AND t.project_id = "'. mysqli_real_escape_string($db_connection, $projectId) .'"';
+                   }
+    $tasksQuery .= ' GROUP BY t.id';
 
     $projectsQuery = 'SELECT p.*, count(t.id) AS countTasks
                       FROM projects AS p
@@ -56,7 +48,7 @@
         'tasks'         => $tasks,
         'projects'      => $projects,
         'pageTitle'     => pageTitle($projects),
-        'projectId'     => $_GET['project_id'] ?? null,
+        'projectId'     => $projectId,
     ]);
 
     $title = 'Завдання та проекти | Дошка';
@@ -66,7 +58,7 @@
         'userName'          => $userName[0]['name'] ?? '',
         'userPhoto'         => $userPhoto,
         'tasks'             => $tasks,
-        'countTotalTasks'   => $countTotalTasks[0]['count(*)'] ?? count($tasks) ,
+        'projectId'         => $projectId,
     ]);
 
     echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]);
