@@ -10,12 +10,27 @@
 
     const USER_ID = 1;
 
-    $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
-                   FROM tasks AS t 
-                   LEFT JOIN projects AS p 
-                       ON t.project_id = p.id
-                   WHERE p.user_id = '.USER_ID.'
-                   GROUP BY t.id';
+    if (!isset($_GET['project_id']))
+    {
+        $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
+                       FROM tasks AS t 
+                       LEFT JOIN projects AS p 
+                           ON t.project_id = p.id
+                       WHERE p.user_id = '.USER_ID.'
+                       GROUP BY t.id';
+
+    } else {
+        $countTasksQuery = 'SELECT count(*) FROM tasks WHERE user_id = '.USER_ID;
+        $countTotalTasks = getQuery($db_connection, $countTasksQuery);
+
+        $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
+                       FROM tasks AS t
+                       LEFT JOIN projects AS p
+                           ON t.project_id = p.id
+                       WHERE p.user_id = '.USER_ID.'
+                       AND t.project_id = '.$_GET['project_id'].'
+                       GROUP BY t.id';
+    }
 
     $projectsQuery = 'SELECT p.*, count(t.id) AS countTasks
                       FROM projects AS p
@@ -30,12 +45,18 @@
     $userName = getQuery($db_connection, 'SELECT name FROM users WHERE id = '.USER_ID);
     $userPhoto = 'static/img/user2-160x160.jpg';
 
-    isProjectExists($projects);
+    if (isProjectExists($projects) === false)
+    {
+        http_response_code(404);
+        include('templates/404.php');
+        exit();
+    }
 
     $kanbanTemplate = renderTemplate('kanban.php', [
         'tasks'         => $tasks,
         'projects'      => $projects,
         'pageTitle'     => pageTitle($projects),
+        'projectId'     => $_GET['project_id'] ?? null,
     ]);
 
     $title = 'Завдання та проекти | Дошка';
@@ -45,6 +66,7 @@
         'userName'          => $userName[0]['name'] ?? '',
         'userPhoto'         => $userPhoto,
         'tasks'             => $tasks,
+        'countTotalTasks'   => $countTotalTasks[0]['count(*)'] ?? count($tasks) ,
     ]);
 
     echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]);

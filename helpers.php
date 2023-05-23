@@ -211,24 +211,22 @@ function pageTitle(array $data): string
  * Перевірка на наявність проєкту.
  *
  * @param array $data
- * @return bool|int|void
+ * @return bool
  */
-function isProjectExists(array $data)
+function isProjectExists(array $data): bool
 {
     foreach ($data as $project)
     {
         if (isset($_GET['project_id']) && $project['id'] === $_GET['project_id'])
         {
-            return http_response_code(200);
+            return true;
         }
     }
 
     if (!isset($_GET['project_id']))
     {
-        return http_response_code(200);
+        return true;
     }
 
-    http_response_code(404);
-    include('templates/404.php');
-    exit();
+    return false;
 }

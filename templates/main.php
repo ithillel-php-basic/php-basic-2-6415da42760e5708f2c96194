@@ -5,6 +5,7 @@
  * @var array $projects
  * @var array $tasks
  * @var resource $kanbanTemplate
+ * @var string $countTotalTasks
  */
 
 
@@ -73,7 +74,7 @@
                                 <p>
                                     Всі
                                     <span class="badge badge-info right">
-                                    <?php echo count($tasks) ?>
+                                    <?php echo $countTotalTasks; ?>
                                 </span>
                                 </p>
                             </a>

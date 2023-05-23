@@ -2,6 +2,7 @@
 /**
  * @var array $tasks
  * @var string $pageTitle
+ * @var string|null $projectId
  */
 
 ?>
@@ -43,7 +44,7 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="backlog">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'backlog' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
+                        <?php if($task['status'] === 'backlog' && isset($projectId) && $task['project_id'] === $projectId): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -70,7 +71,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'backlog' && !isset($_GET['project_id'])): ?>
+                        <?php if ($task['status'] === 'backlog' && !isset($projectId)): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -107,7 +108,7 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="to-do">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'to-do' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
+                        <?php if($task['status'] === 'to-do' && isset($projectId) && $task['project_id'] === $projectId): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -134,7 +135,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'to-do' && !isset($_GET['project_id'])): ?>
+                        <?php if ($task['status'] === 'to-do' && !isset($projectId)): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -171,7 +172,7 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="in-progress">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'in-progress' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
+                        <?php if($task['status'] === 'in-progress' && isset($projectId) && $task['project_id'] === $projectId): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -198,7 +199,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'in-progress' && !isset($_GET['project_id'])): ?>
+                        <?php if ($task['status'] === 'in-progress' && !isset($projectId)): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -235,7 +236,7 @@
                 </div>
                 <div class="card-body connectedSortable" data-status="done">
                     <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'done' && isset($_GET['project_id']) && $task['project_id'] === $_GET['project_id']): ?>
+                        <?php if($task['status'] === 'done' && isset($projectId) && $task['project_id'] === $projectId): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
@@ -257,7 +258,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'done' && !isset($_GET['project_id'])): ?>
+                        <?php if ($task['status'] === 'done' && !isset($projectId)): ?>
                             <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
