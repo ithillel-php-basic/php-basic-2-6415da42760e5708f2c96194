@@ -8,14 +8,21 @@
         die('Fail to connect!');
     }
 
-    const USER_ID = 1;
+    mysqli_set_charset($db_connection, 'utf8');
 
-    $tasksQuery = 'SELECT t.id, t.title, t.description, p.title as project_title, t.deadline, t.file, t.status, t.created_at
-                   FROM tasks AS t 
-                   LEFT JOIN projects AS p 
+    const USER_ID = 1;
+    $projectId = $_GET['project_id'] ?? null;
+
+    $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
+                   FROM tasks AS t
+                   LEFT JOIN projects AS p
                        ON t.project_id = p.id
-                   WHERE p.user_id = '.USER_ID.'
-                   GROUP BY t.id';
+                   WHERE p.user_id = '.USER_ID;
+                   if (isset($projectId))
+                   {
+                       $tasksQuery .= ' AND t.project_id = "'. mysqli_real_escape_string($db_connection, $projectId) .'"';
+                   }
+    $tasksQuery .= ' GROUP BY t.id';
 
     $projectsQuery = 'SELECT p.*, count(t.id) AS countTasks
                       FROM projects AS p
@@ -30,10 +37,18 @@
     $userName = getQuery($db_connection, 'SELECT name FROM users WHERE id = '.USER_ID);
     $userPhoto = 'static/img/user2-160x160.jpg';
 
+    if (isProjectExists($projects) === false)
+    {
+        http_response_code(404);
+        include('templates/404.php');
+        exit();
+    }
+
     $kanbanTemplate = renderTemplate('kanban.php', [
         'tasks'         => $tasks,
         'projects'      => $projects,
-        'pageTitle'     => $projects[0]['title'] ?? '',
+        'pageTitle'     => pageTitle($projects),
+        'projectId'     => $projectId,
     ]);
 
     $title = 'Завдання та проекти | Дошка';
@@ -43,6 +58,7 @@
         'userName'          => $userName[0]['name'] ?? '',
         'userPhoto'         => $userPhoto,
         'tasks'             => $tasks,
+        'projectId'         => $projectId,
     ]);
 
     echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]);
