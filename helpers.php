@@ -28,8 +28,10 @@ function isDateValid(string $date) : bool {
  * @param array $data Дані для вставки на місце плейсхолдерів
  *
  * @return mysqli_stmt Підготовлений вираз
+ * @throws ErrorException
  */
-function dbGetPrepareStmt($link, $sql, $data = []) {
+function dbGetPrepareStmt(mysqli $link, string $sql, array $data = []): mysqli_stmt
+{
     $stmt = mysqli_prepare($link, $sql);
 
     if ($stmt === false) {
@@ -190,6 +192,25 @@ function getQuery($sql_connect, $query) : array
 }
 
 /**
+ * @param mysqli_stmt|false $statement
+ * @param bool $singleQueryMode
+ * @param int $fetch_mode
+ * @return array|null
+ */
+function getQueryByStmt(mysqli_stmt|false $statement, bool $singleQueryMode = false, int $fetch_mode = MYSQLI_ASSOC): array|null
+{
+    mysqli_stmt_execute($statement);
+    $results = mysqli_stmt_get_result($statement);
+
+    if ($singleQueryMode === true)
+    {
+        return mysqli_fetch_assoc($results);
+    }
+
+    return mysqli_fetch_all($results, $fetch_mode);
+}
+
+/**
  * Виводить назву проєкту згідно з активним пунктом меню.
  *
  * @param array $data
@@ -226,6 +247,49 @@ function isProjectExists(array $data): bool
     if (!isset($_GET['project_id']))
     {
         return true;
+    }
+
+    return false;
+}
+
+
+/**
+ * Перевіряє чи є дата сьогоднішньою або з майбутнього
+ *
+ * @param string $future
+ * @return bool
+ */
+function isFutureDate(string $future): bool
+{
+    $now = date('Y-m-d', time());
+
+    if ($future >= $now){
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Перевіряє чи існує id в БД.
+ *
+ * @param array $data
+ * @param int $id
+ * @return bool
+ */
+function isQueryByIdExists(array $data, int $id): bool
+{
+    if (empty($id))
+    {
+        return false;
+    }
+
+    foreach ($data as $item)
+    {
+        if ($item['id'] === $id)
+        {
+            return true;
+        }
     }
 
     return false;

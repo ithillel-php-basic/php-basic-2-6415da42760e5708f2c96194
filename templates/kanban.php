@@ -59,7 +59,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                     <?php
@@ -86,7 +86,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                     <?php
@@ -123,7 +123,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                     <?php
@@ -150,7 +150,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                     <?php
@@ -187,7 +187,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                     <?php
@@ -214,7 +214,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                     <?php
@@ -251,7 +251,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                 </div>
@@ -273,7 +273,7 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
+                                    <a href="<?php echo !empty($task['file']) ? 'downloadDoc.php?file='.urlencode($task['file']) : '#' ?>" class="btn btn-tool">
                                         <i class="fas fa-file"></i>
                                     </a>
                                 </div>

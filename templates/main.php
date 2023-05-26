@@ -19,10 +19,10 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="../index.php" class="nav-link">Дошка</a>
+                <a href="/" class="nav-link disabled">Дошка</a>
             </li>
             <li class="nav-item bg-primary d-none d-sm-inline-block">
-                <a href="../index.php" class="nav-link">Створити задачу</a>
+                <a href="<?php echo (isset($projectId)) ? '/add.php?project_id='.urlencode($projectId) : '/add.php' ?>" class="nav-link">Створити задачу</a>
             </li>
         </ul>
 
@@ -99,7 +99,8 @@
                         </li>
                     <?php endforeach; ?>
                     <li class="nav-item">
-                        <a href="../index.php" class="nav-link bg-olive">
+                        <!-- додати bg-olive, якщо посилання активне -->
+                        <a href="../index.php" class="nav-link">
                             <i class="nav-icon fas fa-plus"></i>
                             <p>
                                 Додати проект

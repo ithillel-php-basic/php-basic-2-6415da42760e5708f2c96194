@@ -22,7 +22,7 @@
                    {
                        $tasksQuery .= ' AND t.project_id = "'. mysqli_real_escape_string($db_connection, $projectId) .'"';
                    }
-    $tasksQuery .= ' GROUP BY t.id';
+    $tasksQuery .= ' GROUP BY t.id ORDER BY id DESC';
 
     $projectsQuery = 'SELECT p.*, count(t.id) AS countTasks
                       FROM projects AS p
