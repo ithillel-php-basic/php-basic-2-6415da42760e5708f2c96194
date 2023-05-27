@@ -5,6 +5,7 @@
  * @var array $projects
  * @var int|null $projectId;
  * @var array $errors
+ * @var array $oldValues
  */
 
 ?>
@@ -56,7 +57,7 @@
                                            id="title"
                                            class="form-control <?php echo (!empty($errors) && isset($errors['title'])) ? 'is-invalid' : '' ?>"
                                            name="title"
-                                           value=""
+                                           value="<?php echo isset($oldValues['title']) ? htmlentities($oldValues['title']) : '' ?>"
                                     >
                                     <?php if(isset($errors['title'])): ?>
                                         <?php foreach ($errors['title'] as $error): ?>
@@ -70,7 +71,7 @@
                                               class="form-control"
                                               rows="4"
                                               name="description"
-                                    ></textarea>
+                                    ><?php echo isset($oldValues['description']) ? htmlentities($oldValues['description']) : '' ?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="project">Оберіть проєкт</label>
@@ -80,7 +81,7 @@
                                     >
                                         <option>-- Не обрано --</option>
                                         <?php foreach ($projects as $project): ?>
-                                            <option value="<?php echo $project['id']; ?>" <?php echo ($project['id'] === $projectId) ? 'selected' : '' ?>><?php echo htmlspecialchars($project['title']) ?></option>
+                                            <option value="<?php echo $project['id']; ?>" <?php echo (isset($oldValues['project']) && $project['id'] === intval($oldValues['project']) || $project['id'] === $projectId) ? 'selected' : '' ?>><?php echo htmlspecialchars($project['title']) ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <?php if(isset($errors['project'])): ?>
@@ -112,7 +113,7 @@
                                            id="inputDate"
                                            class="form-control <?php echo (!empty($errors) && isset($errors['deadline'])) ? 'is-invalid' : '' ?>"
                                            name="deadline"
-                                           value=""
+                                           value="<?php echo isset($oldValues['deadline']) ? htmlentities($oldValues['deadline']) : '' ?>"
                                     >
                                     <?php if(isset($errors['deadline'])): ?>
                                         <?php foreach ($errors['deadline'] as $error): ?>

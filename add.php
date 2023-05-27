@@ -72,7 +72,7 @@
 
             header("Location: /?$mesType=$message");
             exit();
-        };
+        }
     }
 
     $mainSidebar = renderTemplate('mainSidebar.php', [
@@ -96,6 +96,7 @@
         'projectId'     => $projectId,
         'projects'      => $projects,
         'errors'        => $errors,
+        'oldValues'     => $_POST,
     ]);
 
     echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]);
