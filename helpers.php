@@ -28,8 +28,10 @@ function isDateValid(string $date) : bool {
  * @param array $data Дані для вставки на місце плейсхолдерів
  *
  * @return mysqli_stmt Підготовлений вираз
+ * @throws ErrorException
  */
-function dbGetPrepareStmt($link, $sql, $data = []) {
+function dbGetPrepareStmt(mysqli $link, string $sql, array $data = []): mysqli_stmt
+{
     $stmt = mysqli_prepare($link, $sql);
 
     if ($stmt === false) {
@@ -169,24 +171,23 @@ function getTimeRemain(string $date): string
 
 }
 
-
 /**
- * Виводить дані з таблички згідно з SQL запиту та конвертує їх в асоціативний масив.
- *
- * @param $sql_connect
- * @param $query
- * @return array
+ * @param mysqli_stmt|false $statement
+ * @param bool $singleQueryMode
+ * @param int $fetch_mode
+ * @return array|null
  */
-function getQuery($sql_connect, $query) : array
+function getQueryByStmt(mysqli_stmt|false $statement, bool $singleQueryMode = false, int $fetch_mode = MYSQLI_ASSOC): array|null
 {
-    $result = mysqli_query($sql_connect, $query);
+    mysqli_stmt_execute($statement);
+    $results = mysqli_stmt_get_result($statement);
 
-    if ($result === false)
+    if ($singleQueryMode === true)
     {
-        die(mysqli_error($sql_connect));
+        return mysqli_fetch_assoc($results);
     }
 
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return mysqli_fetch_all($results, $fetch_mode);
 }
 
 /**
@@ -217,7 +218,7 @@ function isProjectExists(array $data): bool
 {
     foreach ($data as $project)
     {
-        if (isset($_GET['project_id']) && $project['id'] === $_GET['project_id'])
+        if (isset($_GET['project_id']) && $project['id'] === (int) $_GET['project_id'])
         {
             return true;
         }
@@ -229,4 +230,73 @@ function isProjectExists(array $data): bool
     }
 
     return false;
+}
+
+
+/**
+ * Перевіряє чи є дата сьогоднішньою або з майбутнього
+ *
+ * @param string $future
+ * @return bool
+ */
+function isFutureDate(string $future): bool
+{
+    $now = date('Y-m-d', time());
+
+    if ($future >= $now){
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Перевіряє чи існує id в БД.
+ *
+ * @param array $data
+ * @param int $id
+ * @return bool
+ */
+function isQueryByIdExists(array $data, int $id): bool
+{
+    if (empty($id))
+    {
+        return false;
+    }
+
+    foreach ($data as $item)
+    {
+        if ($item['id'] === $id)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Повертає query string зі знаком питання.
+ *
+ * @return string
+ */
+function getBrowserQueryString(): string
+{
+    $queryStr = '';
+    if (!empty($_SERVER['QUERY_STRING']))
+    {
+        return '?'.$_SERVER['QUERY_STRING'];
+    }
+
+    return $queryStr;
+}
+
+function intProjectId(): int|null
+{
+    if (isset($_GET['project_id']))
+    {
+        return (int) $_GET['project_id'];
+    } else {
+        return null;
+    }
 }

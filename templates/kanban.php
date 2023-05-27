@@ -59,9 +59,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                     <?php
                                     if (!is_null($task['deadline'])):
                                         echo getTimeRemain($task['deadline']);
@@ -86,9 +88,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                     <?php
                                     if (!is_null($task['deadline'])):
                                         echo getTimeRemain($task['deadline']);
@@ -123,9 +127,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                     <?php
                                     if (!is_null($task['deadline'])):
                                         echo getTimeRemain($task['deadline']);
@@ -150,9 +156,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                     <?php
                                     if (!is_null($task['deadline'])):
                                         echo getTimeRemain($task['deadline']);
@@ -187,9 +195,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                     <?php
                                     if (!is_null($task['deadline'])):
                                         echo getTimeRemain($task['deadline']);
@@ -214,9 +224,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                     <?php
                                     if (!is_null($task['deadline'])):
                                         echo getTimeRemain($task['deadline']);
@@ -251,9 +263,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -273,9 +287,11 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <a href="#" class="btn btn-tool">
-                                        <i class="fas fa-file"></i>
-                                    </a>
+                                    <?php if (!is_null($task['file'])): ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php endif; ?>

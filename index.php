@@ -1,40 +1,16 @@
 <?php
     require_once 'helpers.php';
+    require_once 'sql.php';
 
-    $db_connection = mysqli_connect('127.0.0.1', 'root', '', 'tasks_and_projects');
+    $db_connection = db_connection();
 
-    if ($db_connection === false)
-    {
-        die('Fail to connect!');
-    }
+    $projectId = intProjectId();
 
-    mysqli_set_charset($db_connection, 'utf8');
+    $tasks = getTasks();
+    $projects = getProjects();
+    $queryStr = getBrowserQueryString();
 
-    const USER_ID = 1;
-    $projectId = $_GET['project_id'] ?? null;
-
-    $tasksQuery = 'SELECT t.id, t.title, t.description, p.id as project_id, p.title as project_title, t.deadline, t.file, t.status, t.created_at
-                   FROM tasks AS t
-                   LEFT JOIN projects AS p
-                       ON t.project_id = p.id
-                   WHERE p.user_id = '.USER_ID;
-                   if (isset($projectId))
-                   {
-                       $tasksQuery .= ' AND t.project_id = "'. mysqli_real_escape_string($db_connection, $projectId) .'"';
-                   }
-    $tasksQuery .= ' GROUP BY t.id';
-
-    $projectsQuery = 'SELECT p.*, count(t.id) AS countTasks
-                      FROM projects AS p
-                      LEFT JOIN tasks AS t 
-                          ON p.id = t.project_id
-                      WHERE p.user_id = '.USER_ID.'
-                      GROUP BY p.id';
-
-    $tasks = getQuery($db_connection, $tasksQuery);
-    $projects = getQuery($db_connection, $projectsQuery);
-
-    $userName = getQuery($db_connection, 'SELECT name FROM users WHERE id = '.USER_ID);
+    $user = authUser();
     $userPhoto = 'static/img/user2-160x160.jpg';
 
     if (isProjectExists($projects) === false)
@@ -51,14 +27,28 @@
         'projectId'     => $projectId,
     ]);
 
+    $navbarTemplate = renderTemplate('navbar.php', [
+        'projectId'     => $projectId,
+        'url'           => $_SERVER['REQUEST_URI'],
+        'pageName'      => $_SERVER['SCRIPT_NAME'],
+        'queryStr'      => $queryStr,
+    ]);
+
+    $mainSidebarTemplate = renderTemplate('mainSidebar.php', [
+        'userPhoto'     => $userPhoto,
+        'user'          => $user,
+        'projects'      => $projects,
+        'tasks'         => $tasks,
+        'projectId'     => $projectId,
+
+    ]);
+
     $title = 'Завдання та проекти | Дошка';
     $body = renderTemplate('main.php', [
-        'kanbanTemplate'    => $kanbanTemplate,
-        'projects'          => $projects,
-        'userName'          => $userName[0]['name'] ?? '',
-        'userPhoto'         => $userPhoto,
-        'tasks'             => $tasks,
-        'projectId'         => $projectId,
+        'kanbanTemplate'        => $kanbanTemplate,
+        'mainSidebarTemplate'   => $mainSidebarTemplate,
+        'navbarTemplate'        => $navbarTemplate,
+        'projectId'             => $projectId,
     ]);
 
     echo renderTemplate('layout.php', ['title' => $title, 'body' => $body]);
