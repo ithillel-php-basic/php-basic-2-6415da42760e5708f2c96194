@@ -1,118 +1,19 @@
 <?php
 /**
- * @var string $userPhoto
- * @var string $userName
- * @var array $projects
- * @var array $tasks
+ * @var resource $navbarTemplate
  * @var resource $kanbanTemplate
- * @var string|null $projectId
+ * @var resource $mainSidebarTemplate
  */
 
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="/" class="nav-link disabled">Дошка</a>
-            </li>
-            <li class="nav-item bg-primary d-none d-sm-inline-block">
-                <a href="<?php echo (isset($projectId)) ? '/add.php?project_id='.urlencode($projectId) : '/add.php' ?>" class="nav-link">Створити задачу</a>
-            </li>
-        </ul>
-
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <?php echo $navbarTemplate ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="../index.php" class="brand-link">
-            <img src="../static/img/logo.png" alt="Логотип Завдання та проекти" class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light">Завдання та проекти</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="<?php echo $userPhoto ?>" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block"><?php echo htmlspecialchars($userName) ?></a>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                       with font-awesome or any other icon font library -->
-                    <?php foreach ($projects as $key => $project): ?>
-                    <?php if ($key === array_key_first($projects)): ?>
-                        <li class="nav-item">
-                            <a href="/"
-                               class="nav-link <?php echo (!isset($projectId)) ? 'active' : ''; ?>"
-                            >
-                                <i class="nav-icon fas fa-columns"></i>
-                                <p>
-                                    Всі
-                                    <span class="badge badge-info right">
-                                    <?php echo array_sum(array_column($projects, 'countTasks')); ?>
-                                </span>
-                                </p>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                        <li class="nav-item">
-                            <a href="/?project_id=<?php echo urlencode($project['id']) ?>"
-                               class="nav-link
-                               <?php
-                                   if (isset($projectId)):
-                                        echo ($project['id'] === $projectId) ? 'active' : '';
-                                   endif;
-                               ?>"
-                            >
-                                <i class="nav-icon fas fa-columns"></i>
-                                <p>
-                                    <?php echo htmlspecialchars($project['title']) ?>
-                                <span class="badge badge-info right">
-                                    <?php echo $project['countTasks'] ?>
-                                </span>
-                                </p>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                    <li class="nav-item">
-                        <!-- додати bg-olive, якщо посилання активне -->
-                        <a href="../index.php" class="nav-link">
-                            <i class="nav-icon fas fa-plus"></i>
-                            <p>
-                                Додати проект
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-    </aside>
+    <?php echo $mainSidebarTemplate ?>
 
     <!-- Content Wrapper. Contains page content -->
     <?php echo $kanbanTemplate ?>
@@ -149,4 +50,7 @@
 <script src="../static/plugins/filterizr/jquery.filterizr.min.js"></script>
 <!-- Page specific script -->
 <script src="../static/js/kanban.js"></script>
+<!-- toastr script -->
+<script src="../static/plugins/toastr/toastr.min.js"></script>
+<script src="../static/js/toastrMessages.js"></script>
 </body>

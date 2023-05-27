@@ -1,12 +1,10 @@
 <?php
     require_once 'helpers.php';
+    require_once 'sql.php';
 
-    $db_connection = mysqli_connect('127.0.0.1', 'root', '', 'tasks_and_projects');
-    const USER_ID = 1;
+    $db_connection = db_connection();
 
-    $userQuery = 'SELECT * FROM users WHERE id = '.USER_ID;
-    $userStmt = dbGetPrepareStmt($db_connection, $userQuery);
-    $user = getQueryByStmt($userStmt, true);
+    $user = authUser();
 
     $document = $_GET['file'] ?? null;
 

@@ -1,41 +1,19 @@
 <?php
     require_once 'helpers.php';
+    require_once 'sql.php';
 
-    $db_connection = mysqli_connect('127.0.0.1', 'root', '', 'tasks_and_projects');
+    $db_connection = db_connection();
 
-    if ($db_connection === false)
-    {
-        die('Не вдається під\'єднатися до БД.');
-    }
-
-    mysqli_set_charset($db_connection, 'utf8');
-
-    const USER_ID = 1;
     $errors = [];
 
-    if (isset($_GET['project_id']))
-    {
-        $projectId = (int) $_GET['project_id'];
-    } else {
-        $projectId = null;
-    }
+    $projectId = intProjectId();
 
-
-    $projectsQuery = 'SELECT p.*, count(t.id) AS countTasks
-                      FROM projects AS p
-                      LEFT JOIN tasks AS t 
-                          ON p.id = t.project_id
-                      WHERE p.user_id = '.USER_ID.'
-                      GROUP BY p.id';
-
-
-    $projectsStmt = dbGetPrepareStmt($db_connection, $projectsQuery);
-    $projects = getQueryByStmt($projectsStmt);
-
-    $userStmt = dbGetPrepareStmt($db_connection, 'SELECT * FROM users WHERE id = '. USER_ID);
-    $userName = getQueryByStmt($userStmt, TRUE);
+    $projects = getProjects();
+    $user = authUser();
     $userPhoto = 'static/img/user2-160x160.jpg';
-    $filename = '';
+    $filename = null;
+
+    $queryStr = getBrowserQueryString();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
@@ -55,19 +33,28 @@
             $errors['deadline'][] = 'Обрана дата не може бути раніше за сьогоднішню.';
         }
 
-
+        if (empty($_POST['deadline']))
+        {
+            $_POST['deadline'] = null;
+        }
 
         if (!empty($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK)
         {
             $tmpFileName = $_FILES['file']['tmp_name'];
-            $originFileName = basename($_FILES['file']['name']);
-            $filename = md5(uniqid(rand(), true)) . '.' . $originFileName;
-            move_uploaded_file($tmpFileName, './storage/'.$filename);
+            $originFileName = $_FILES['file']['name'];
+            $getExt = explode(".", $originFileName);
+            $ext = end($getExt);
+
+            $filename = md5(uniqid(rand(), true)) . '.' . $ext;
+
+            if (!move_uploaded_file($tmpFileName, 'storage/'.$filename)){
+                $errors['file'][] = 'Виникла помилка при завантаженні файлу.';
+            }
         }
 
         if (empty($errors))
         {
-            $storeTaskQuery = 'INSERT INTO tasks(title, `description`, project_id, deadline, `file`, user_id, created_at) 
+            $storeTaskQuery = 'INSERT INTO tasks(title, `description`, project_id, deadline, `file`, user_id, created_at)
                                VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE)';
 
             $storeTaskStmt = dbGetPrepareStmt($db_connection, $storeTaskQuery, [
@@ -79,23 +66,33 @@
                 USER_ID,
                 ]);
 
+            $mesType = 'success';
+            $message = 'Завдання було успішно створене.';
             mysqli_stmt_execute($storeTaskStmt);
 
-            header('Location: http://hillel.pro/');
+            header("Location: /?$mesType=$message");
             exit();
         };
     }
 
-    $sidebar = renderTemplate('sidebar.php', [
+    $mainSidebar = renderTemplate('mainSidebar.php', [
         'projects'      => $projects,
         'projectId'     => $projectId,
-        'userName'      => $userName['name'],
+        'user'          => $user,
         'userPhoto'     => $userPhoto,
+    ]);
+
+    $navbar = renderTemplate('navbar.php', [
+        'projectId'     => $projectId,
+        'url'           => $_SERVER['REQUEST_URI'],
+        'pageName'      => $_SERVER['SCRIPT_NAME'],
+        'queryStr'      => $queryStr,
     ]);
 
     $title = 'Завдання та проекти | Створити задачу';
     $body = renderTemplate('addTaskForm.php', [
-        'sidebar'       => $sidebar,
+        'mainSidebar'   => $mainSidebar,
+        'navbar'        => $navbar,
         'projectId'     => $projectId,
         'projects'      => $projects,
         'errors'        => $errors,

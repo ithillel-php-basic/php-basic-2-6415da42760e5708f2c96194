@@ -1,44 +1,22 @@
 <?php
 /**
- * @var resource $sidebar
+ * @var resource $mainSidebar
+ * @var resource $navbar
  * @var array $projects
  * @var int|null $projectId;
  * @var array $errors
  */
 
-session_start();
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="/" class="nav-link">Дошка</a>
-            </li>
-            <li class="nav-item bg-secondary d-none d-sm-inline-block">
-                <a href="../add.php" class="nav-link disabled">Створити задачу</a>
-            </li>
-        </ul>
-
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <?php echo $navbar ?>
     <!-- /.navbar -->
 
 
     <!-- Main Sidebar Container -->
-    <?php echo $sidebar; ?>
+    <?php echo $mainSidebar; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -58,7 +36,7 @@ session_start();
         </section>
 
         <section class="content">
-            <form action="../add.php" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo '/add.php' ?>" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card card-primary">
@@ -78,7 +56,7 @@ session_start();
                                            id="title"
                                            class="form-control <?php echo (!empty($errors) && isset($errors['title'])) ? 'is-invalid' : '' ?>"
                                            name="title"
-                                           value="<?php echo $_SESSION['title'] = $_POST['title'] ?? '' ?>"
+                                           value=""
                                     >
                                     <?php if(isset($errors['title'])): ?>
                                         <?php foreach ($errors['title'] as $error): ?>
@@ -92,7 +70,7 @@ session_start();
                                               class="form-control"
                                               rows="4"
                                               name="description"
-                                    ><?php echo $_SESSION['description'] = $_POST['description'] ?? '' ?></textarea>
+                                    ></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="project">Оберіть проєкт</label>
@@ -102,7 +80,7 @@ session_start();
                                     >
                                         <option>-- Не обрано --</option>
                                         <?php foreach ($projects as $project): ?>
-                                            <option value="<?php echo $project['id']; ?>" <?php echo ($project['id'] === $projectId) ? 'selected' : '' ?>><?php echo $project['title'] ?></option>
+                                            <option value="<?php echo $project['id']; ?>" <?php echo ($project['id'] === $projectId) ? 'selected' : '' ?>><?php echo htmlspecialchars($project['title']) ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <?php if(isset($errors['project'])): ?>
@@ -134,7 +112,7 @@ session_start();
                                            id="inputDate"
                                            class="form-control <?php echo (!empty($errors) && isset($errors['deadline'])) ? 'is-invalid' : '' ?>"
                                            name="deadline"
-                                           value="<?php echo $_SESSION['deadline'] = $_POST['deadline'] ?? '' ?>"
+                                           value=""
                                     >
                                     <?php if(isset($errors['deadline'])): ?>
                                         <?php foreach ($errors['deadline'] as $error): ?>
@@ -146,9 +124,14 @@ session_start();
                                     <label for="file">Прикріпити файл</label>
                                     <input type="file"
                                            id="file"
-                                           class="form-control"
+                                           class="form-control <?php echo (!empty($errors) && isset($errors['file'])) ? 'is-invalid' : '' ?>"
                                            name="file"
                                     >
+                                    <?php if(isset($errors['file'])): ?>
+                                        <?php foreach ($errors['file'] as $error): ?>
+                                            <span id="file-error" class="error invalid-feedback"><?php echo $error ?></span>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -198,4 +181,7 @@ session_start();
 <script src="../static/plugins/filterizr/jquery.filterizr.min.js"></script>
 <!-- Page specific script -->
 <script src="../static/js/kanban.js"></script>
+<!-- toastr script -->
+<script src="../static/plugins/toastr/toastr.min.js"></script>
+<script src="../static/js/toastrMessages.js"></script>
 </body>

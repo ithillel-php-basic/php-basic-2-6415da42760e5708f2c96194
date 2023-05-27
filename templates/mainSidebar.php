@@ -1,9 +1,11 @@
 <?php
 /**
  * @var array $projects
- * @var string $userName
+ * @var array $user
  * @var string $userPhoto
+ * @var int|null $projectId
  */
+
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -21,7 +23,7 @@
                 <img src="<?php echo $userPhoto ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?php echo $userName; ?></a>
+                <a href="#" class="d-block"><?php echo htmlspecialchars($user['name']); ?></a>
             </div>
         </div>
 
@@ -62,6 +64,7 @@
                     </li>
                 <?php endforeach; ?>
                 <li class="nav-item">
+                    <!-- додати bg-olive, якщо посилання активне -->
                     <a href="../index.php" class="nav-link">
                         <i class="nav-icon fas fa-plus"></i>
                         <p>

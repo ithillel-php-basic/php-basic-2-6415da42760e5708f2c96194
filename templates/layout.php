@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- custom kanban styles -->
     <link rel="stylesheet" href="../static/css/kanban.css">
+    <!-- toastr styles -->
+    <link rel="stylesheet" href="../static/plugins/toastr/toastr.min.css">
 
 </head>
 <?php echo $body ?>

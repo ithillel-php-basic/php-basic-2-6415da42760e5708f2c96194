@@ -171,26 +171,6 @@ function getTimeRemain(string $date): string
 
 }
 
-
-/**
- * Виводить дані з таблички згідно з SQL запиту та конвертує їх в асоціативний масив.
- *
- * @param $sql_connect
- * @param $query
- * @return array
- */
-function getQuery($sql_connect, $query) : array
-{
-    $result = mysqli_query($sql_connect, $query);
-
-    if ($result === false)
-    {
-        die(mysqli_error($sql_connect));
-    }
-
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
 /**
  * @param mysqli_stmt|false $statement
  * @param bool $singleQueryMode
@@ -238,7 +218,7 @@ function isProjectExists(array $data): bool
 {
     foreach ($data as $project)
     {
-        if (isset($_GET['project_id']) && $project['id'] === $_GET['project_id'])
+        if (isset($_GET['project_id']) && $project['id'] === (int) $_GET['project_id'])
         {
             return true;
         }
@@ -293,4 +273,30 @@ function isQueryByIdExists(array $data, int $id): bool
     }
 
     return false;
+}
+
+/**
+ * Повертає query string зі знаком питання.
+ *
+ * @return string
+ */
+function getBrowserQueryString(): string
+{
+    $queryStr = '';
+    if (!empty($_SERVER['QUERY_STRING']))
+    {
+        return '?'.$_SERVER['QUERY_STRING'];
+    }
+
+    return $queryStr;
+}
+
+function intProjectId(): int|null
+{
+    if (isset($_GET['project_id']))
+    {
+        return (int) $_GET['project_id'];
+    } else {
+        return null;
+    }
 }
