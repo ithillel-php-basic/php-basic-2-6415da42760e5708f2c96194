@@ -8,12 +8,12 @@
     $title = 'Завдання та проекти | Реєстрація нового користувача';
     $errors = [];
 
-    $usersQuery = 'SELECT * FROM users';
-    $usersStmt = dbGetPrepareStmt($db_connection, $usersQuery);
-    $users = getQueryByStmt($usersStmt);
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
+        $userQuery = 'SELECT * FROM users WHERE email = ?';
+        $userStmt = dbGetPrepareStmt($db_connection, $userQuery, [$_POST['email']]);
+        $checkUserEmail = getQueryByStmt($userStmt, TRUE);
+
         foreach ($_POST as $field => $value)
         {
             $is_nullable = is_nullable($field);
@@ -33,16 +33,19 @@
 
 
         $is_email = is_email('email');
-        if (!$is_email['is_valid'])
+        if (!empty($_POST['email']) && !$is_email['is_valid'])
         {
             $errors['email'][] = $is_email['message'];
         }
 
 
-        $is_email_unique = is_email_unique('email', $users);
-        if (!$is_email_unique['is_valid'])
+        if (!empty($checkUserEmail))
         {
-            $errors['email'][] = $is_email_unique['message'];
+            $is_email_unique = is_email_unique('email', $checkUserEmail);
+            if (!$is_email_unique['is_valid'])
+            {
+                $errors['email'][] = $is_email_unique['message'];
+            }
         }
 
 
@@ -56,16 +59,11 @@
         if (empty($errors))
         {
             $storeUserQuery = 'INSERT INTO users(name, email, password, created_at) VALUES (?, ?, ?, CURRENT_DATE)';
-
-            $storeUserStmt = dbGetPrepareStmt($db_connection, $storeUserQuery, [
-                $_POST['name'],
-                $_POST['email'],
-                password_hash($_POST['password'], PASSWORD_DEFAULT),
-            ]);
+            $storeUserData = [$_POST['name'], $_POST['email'], password_hash($_POST['password'], PASSWORD_DEFAULT)];
+            insertQueryByStmt($storeUserQuery, $storeUserData);
 
             $mesType = 'success';
             $message = 'Нового користувача успішно зареєстровано.';
-            mysqli_stmt_execute($storeUserStmt);
 
             header("Location: /?$mesType=$message");
             exit();

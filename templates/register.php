@@ -40,6 +40,8 @@
                            placeholder="Повне ім'я"
                            name="name"
                            id="name"
+                           value="<?php echo (isset($_POST['name'])) ? htmlentities($_POST['name']) : '' ?>"
+                           autocomplete="off"
                     >
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -61,6 +63,8 @@
                            placeholder="Email"
                            name="email"
                            id="email"
+                           value="<?php echo (isset($_POST['email'])) ? htmlentities($_POST['email']) : '' ?>"
+                           autocomplete="off"
                     >
                     <div class="input-group-append">
                         <div class="input-group-text">

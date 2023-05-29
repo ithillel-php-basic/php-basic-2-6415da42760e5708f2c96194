@@ -56,21 +56,20 @@
      * @param array $table
      * @return string[]
      */
-    function is_email_unique(string $field, array $table): array
+    function is_email_unique(string $field, array $query): array
     {
         $result = [
             'field'     => $field,
             'message'   => 'Вказаний email вже використовується.'
         ];
 
-        foreach ($table as $row)
+
+        if ($_POST["$field"] === $query["$field"])
         {
-            if ($_POST["$field"] === $row["$field"])
-            {
-                $result['is_valid'] = false;
-                return $result;
-            }
+            $result['is_valid'] = false;
+            return $result;
         }
+
 
         $result['is_valid'] = true;
         return $result;

@@ -305,3 +305,21 @@ function intProjectId(): int|null
         return null;
     }
 }
+
+
+/**
+ * Вносить дані в БД.
+ *
+ * @param string $query
+ * @param array $data
+ * @return bool
+ * @throws ErrorException
+ */
+function insertQueryByStmt(string $query, array $data): bool
+{
+    $db_connection = db_connection();
+
+    $statement = dbGetPrepareStmt($db_connection, $query, $data);
+
+    return mysqli_stmt_execute($statement);
+}

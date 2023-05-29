@@ -59,18 +59,18 @@
             $storeTaskQuery = 'INSERT INTO tasks(title, `description`, project_id, deadline, `file`, user_id, created_at)
                                VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE)';
 
-            $storeTaskStmt = dbGetPrepareStmt($db_connection, $storeTaskQuery, [
+            $storeTaskData = [
                 $_POST['title'],
                 $_POST['description'],
                 $_POST['project'],
                 $_POST['deadline'],
                 $filename,
                 USER_ID,
-                ]);
+                ];
 
             $mesType = 'success';
             $message = 'Завдання було успішно створене.';
-            mysqli_stmt_execute($storeTaskStmt);
+            insertQueryByStmt($storeTaskQuery, $storeTaskData);
 
             header("Location: /?$mesType=$message");
             exit();
