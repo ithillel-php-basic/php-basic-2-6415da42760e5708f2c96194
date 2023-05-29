@@ -1,6 +1,7 @@
 <?php
     require_once 'helpers.php';
     require_once 'sql.php';
+    require_once 'validation_rules.php';
 
     $db_connection = db_connection();
 
@@ -17,9 +18,10 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
-        if (empty($_POST['title']))
+        $is_nullable = is_nullable('title');
+        if (!$is_nullable['is_valid'])
         {
-            $errors['title'][] = 'Це поле не має бути порожнім.';
+            $errors['title'][] = $is_nullable['message'];
 
         }
 

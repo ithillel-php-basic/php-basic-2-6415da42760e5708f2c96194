@@ -291,6 +291,11 @@ function getBrowserQueryString(): string
     return $queryStr;
 }
 
+/**
+ * Перетворює строкове значення в числове.
+ *
+ * @return int|null
+ */
 function intProjectId(): int|null
 {
     if (isset($_GET['project_id']))
