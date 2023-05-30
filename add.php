@@ -1,6 +1,7 @@
 <?php
     require_once 'helpers.php';
     require_once 'sql.php';
+    require_once 'validation_rules.php';
 
     $db_connection = db_connection();
 
@@ -17,9 +18,10 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
-        if (empty($_POST['title']))
+        $is_nullable = is_nullable('title');
+        if (!$is_nullable['is_valid'])
         {
-            $errors['title'][] = 'Це поле не має бути порожнім.';
+            $errors['title'][] = $is_nullable['message'];
 
         }
 
@@ -57,18 +59,18 @@
             $storeTaskQuery = 'INSERT INTO tasks(title, `description`, project_id, deadline, `file`, user_id, created_at)
                                VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE)';
 
-            $storeTaskStmt = dbGetPrepareStmt($db_connection, $storeTaskQuery, [
+            $storeTaskData = [
                 $_POST['title'],
                 $_POST['description'],
                 $_POST['project'],
                 $_POST['deadline'],
                 $filename,
                 USER_ID,
-                ]);
+                ];
 
             $mesType = 'success';
             $message = 'Завдання було успішно створене.';
-            mysqli_stmt_execute($storeTaskStmt);
+            insertQueryByStmt($storeTaskQuery, $storeTaskData);
 
             header("Location: /?$mesType=$message");
             exit();
