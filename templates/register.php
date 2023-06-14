@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * @var string $title
  * @var array $errors
@@ -50,8 +51,8 @@
                     </div>
                 </div>
 
-                <?php if(isset($errors['name'])): ?>
-                    <?php foreach ($errors['name'] as $error): ?>
+                <?php if (isset($errors['name'])) : ?>
+                    <?php foreach ($errors['name'] as $error) : ?>
                         <span id="name-error" class="error invalid-feedback"><?php echo $error ?></span>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -73,16 +74,18 @@
                     </div>
                 </div>
 
-                <?php if(isset($errors['email'])): ?>
-                    <?php foreach ($errors['email'] as $error): ?>
+                <?php if (isset($errors['email'])) : ?>
+                    <?php foreach ($errors['email'] as $error) : ?>
                         <span id="email-error" class="error invalid-feedback"><?php echo $error ?></span>
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <div class="input-group mb-3 <?php echo (isset($errors['password']) || isset($errors['password_confirmation'])) ? 'is-invalid' : '' ?>">
+                <div class="input-group mb-3 <?php echo (isset($errors['password'])
+                    || isset($errors['password_confirmation'])) ? 'is-invalid' : '' ?>">
                     <label for="password"></label>
                     <input type="password"
-                           class="form-control <?php echo (isset($errors['password']) || isset($errors['password_confirmation'])) ? 'is-invalid' : '' ?>"
+                           class="form-control <?php echo (isset($errors['password'])
+                               || isset($errors['password_confirmation'])) ? 'is-invalid' : '' ?>"
                            placeholder="Пароль"
                            name="password"
                            id="password"
@@ -94,16 +97,18 @@
                     </div>
                 </div>
 
-                <?php if(isset($errors['password'])): ?>
-                    <?php foreach ($errors['password'] as $error): ?>
+                <?php if (isset($errors['password'])) : ?>
+                    <?php foreach ($errors['password'] as $error) : ?>
                         <span id="password-error" class="error invalid-feedback"><?php echo $error ?></span>
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <div class="input-group mb-3 <?php echo (isset($errors['password_confirmation'])) ? 'is-invalid' : '' ?>">
+                <div class="input-group mb-3 <?php echo (isset($errors['password_confirmation']))
+                    ? 'is-invalid' : '' ?>">
                     <label for="password_confirmation"></label>
                     <input type="password"
-                           class="form-control <?php echo (isset($errors['password_confirmation'])) ? 'is-invalid' : '' ?>"
+                           class="form-control <?php echo (isset($errors['password_confirmation']))
+                               ? 'is-invalid' : '' ?>"
                            placeholder="Повторіть пароль"
                            name="password_confirmation"
                            id="password_confirmation"
@@ -115,15 +120,16 @@
                     </div>
                 </div>
 
-                <?php if(isset($errors['password_confirmation'])): ?>
-                    <?php foreach ($errors['password_confirmation'] as $error): ?>
-                        <span id="password_confirmation-error" class="error invalid-feedback"><?php echo $error ?></span>
+                <?php if (isset($errors['password_confirmation'])) : ?>
+                    <?php foreach ($errors['password_confirmation'] as $error) : ?>
+                        <span id="password_confirmation-error" class="error invalid-feedback">
+                            <?php echo $error ?>
+                        </span>
                     <?php endforeach; ?>
                 <?php endif; ?>
 
                 <?php
-                if (!empty($errors))
-                {
+                if (!empty($errors)) {
                     echo '<span class="error invalid-feedback">Будь-ласка виправте помилки.</span>';
                 }
                 ?>

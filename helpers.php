@@ -12,8 +12,10 @@
  * @param string $date Дата у вигляді рядка
  *
  * @return bool true у разі збігу з форматом 'ГГГГ-ММ-ДД', інакше false
+ * @deprecated Після того як проєкт перевели на ООП
  */
-function isDateValid(string $date) : bool {
+function isDateValid(string $date) : bool
+{
     $format_to_check = 'Y-m-d';
     $dateTimeObj = date_create_from_format($format_to_check, $date);
 
@@ -29,6 +31,7 @@ function isDateValid(string $date) : bool {
  *
  * @return mysqli_stmt Підготовлений вираз
  * @throws ErrorException
+ * @deprecated Після того як проєкт перевели на ООП
  */
 function dbGetPrepareStmt(mysqli $link, string $sql, array $data = []): mysqli_stmt
 {
@@ -48,11 +51,9 @@ function dbGetPrepareStmt(mysqli $link, string $sql, array $data = []): mysqli_s
 
             if (is_int($value)) {
                 $type = 'i';
-            }
-            else if (is_string($value)) {
+            } elseif (is_string($value)) {
                 $type = 's';
-            }
-            else if (is_double($value)) {
+            } elseif (is_double($value)) {
                 $type = 'd';
             }
 
@@ -97,8 +98,9 @@ function dbGetPrepareStmt(mysqli $link, string $sql, array $data = []): mysqli_s
  * @param string $many Форма множини для решти чисел
  *
  * @return string Розрахована форма множини
+ * @deprecated Після того як проєкт перевели на ООП
  */
-function getNounPluralForm (int $number, string $one, string $two, string $many): string
+function getNounPluralForm(int $number, string $one, string $two, string $many): string
 {
     $number = (int) $number;
     $mod10 = $number % 10;
@@ -128,8 +130,10 @@ function getNounPluralForm (int $number, string $one, string $two, string $many)
  * @param string $name Шлях до файлу шаблону відносно папки templates
  * @param array $data Асоціативний масив із даними для шаблону
  * @return string Підсумковий HTML
+ * @deprecated Після того як проєкт перевели на ООП
  */
-function renderTemplate($name, array $data = []) {
+function renderTemplate(string $name, array $data = []): string
+{
     $name = 'templates/' . $name;
     $result = '';
 
@@ -144,182 +148,4 @@ function renderTemplate($name, array $data = []) {
     $result = ob_get_clean();
 
     return $result;
-}
-
-
-/**
- * Показує скільки залишилось днів та годин до вказаної дати.
- *
- * @param string $date
- * @return string
- */
-function getTimeRemain(string $date): string
-{
-    $diff = strtotime($date) - time();
-    $diff = max($diff, 0);
-
-    $days = floor($diff/(60*60*24));
-    $hours = floor(($diff-$days*60*60*24)/(60*60));
-
-    if ($diff <= 86400)
-    {
-        $checkPerDay = ($diff === 86400 ? $hours = 24 : $hours);
-        return '<small class="badge badge-danger" title="'.$date.'"><i class="far fa-clock"></i> '. $checkPerDay .' год </small>';
-    }
-
-    return '<small class="badge badge-success" title="'.$date.'"><i class="far fa-clock"></i> '. $days .' дн : '.$hours.' год </small>';
-
-}
-
-/**
- * @param mysqli_stmt|false $statement
- * @param bool $singleQueryMode
- * @param int $fetch_mode
- * @return array|null
- */
-function getQueryByStmt(mysqli_stmt|false $statement, bool $singleQueryMode = false, int $fetch_mode = MYSQLI_ASSOC): array|null
-{
-    mysqli_stmt_execute($statement);
-    $results = mysqli_stmt_get_result($statement);
-
-    if ($singleQueryMode === true)
-    {
-        return mysqli_fetch_assoc($results);
-    }
-
-    return mysqli_fetch_all($results, $fetch_mode);
-}
-
-/**
- * Виводить назву проєкту згідно з активним пунктом меню.
- *
- * @param array $data
- * @return string
- */
-function pageTitle(array $data): string
-{
-    foreach ($data as $project)
-    {
-        if (isset($_GET['project_id']) && $project['id'] === $_GET['project_id'])
-        {
-            return $project['title'];
-        }
-    }
-    return 'Всі';
-}
-
-/**
- * Перевірка на наявність проєкту.
- *
- * @param array $data
- * @return bool
- */
-function isProjectExists(array $data): bool
-{
-    foreach ($data as $project)
-    {
-        if (isset($_GET['project_id']) && $project['id'] === (int) $_GET['project_id'])
-        {
-            return true;
-        }
-    }
-
-    if (!isset($_GET['project_id']))
-    {
-        return true;
-    }
-
-    return false;
-}
-
-
-/**
- * Перевіряє чи є дата сьогоднішньою або з майбутнього
- *
- * @param string $future
- * @return bool
- */
-function isFutureDate(string $future): bool
-{
-    $now = date('Y-m-d', time());
-
-    if ($future >= $now){
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Перевіряє чи існує id в БД.
- *
- * @param array $data
- * @param int $id
- * @return bool
- */
-function isQueryByIdExists(array $data, int $id): bool
-{
-    if (empty($id))
-    {
-        return false;
-    }
-
-    foreach ($data as $item)
-    {
-        if ($item['id'] === $id)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-/**
- * Повертає query string зі знаком питання.
- *
- * @return string
- */
-function getBrowserQueryString(): string
-{
-    $queryStr = '';
-    if (!empty($_SERVER['QUERY_STRING']))
-    {
-        return '?'.$_SERVER['QUERY_STRING'];
-    }
-
-    return $queryStr;
-}
-
-/**
- * Перетворює строкове значення в числове.
- *
- * @return int|null
- */
-function intProjectId(): int|null
-{
-    if (isset($_GET['project_id']))
-    {
-        return (int) $_GET['project_id'];
-    } else {
-        return null;
-    }
-}
-
-
-/**
- * Вносить дані в БД.
- *
- * @param string $query
- * @param array $data
- * @return bool
- * @throws ErrorException
- */
-function insertQueryByStmt(string $query, array $data): bool
-{
-    $db_connection = db_connection();
-
-    $statement = dbGetPrepareStmt($db_connection, $query, $data);
-
-    return mysqli_stmt_execute($statement);
 }

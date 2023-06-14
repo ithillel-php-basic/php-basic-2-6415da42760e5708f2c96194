@@ -1,8 +1,13 @@
 <?php
+session_start();
+use services\KanbanService;
+use services\MainSidebarService;
+use services\NavbarService;
+
 /**
- * @var resource $navbarTemplate
- * @var resource $kanbanTemplate
- * @var resource $mainSidebarTemplate
+ * @var KanbanService $kanbanTemplate
+ * @var NavbarService $navbarTemplate
+ * @var MainSidebarService $mainSidebarTemplate
  */
 
 ?>

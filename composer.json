@@ -1,0 +1,32 @@
+{
+  "name": "vendor/php-basic-2-6415da42760e5708f2c96194",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Yevgenii",
+      "email": "yevgenii.volozhinskyi@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-pdo": "*",
+    "ext-mysqli": "*",
+    "nesbot/carbon": "^2.67",
+    "rakit/validation": "^1.4"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.7"
+  },
+  "autoload": {
+    "classmap": [
+      "controllers",
+      "helpers",
+      "databases",
+      "services",
+      "requests",
+      "modules/rakit/validation/src/Rules",
+      "middlewares"
+    ]
+  }
+}
