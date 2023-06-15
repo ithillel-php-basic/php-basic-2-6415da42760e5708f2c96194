@@ -3,12 +3,15 @@
 namespace controllers;
 
 use databases\Sql;
+use Exception;
 use helpers\ErrorHandler;
 use helpers\GlobalArrayHandler;
 use helpers\ProjectHandler;
 use helpers\TemplateRenderer;
 use middlewares\AuthenticationMiddleware;
+use requests\Request;
 use requests\StoreTaskRequest;
+use requests\UpdateTaskStatus;
 use services\AddTaskFormTemplateService;
 use services\MainSidebarService;
 use services\MainTemplateService;
@@ -25,7 +28,7 @@ class KanbanController extends BaseController
     protected NavbarService $navbarService;
     protected ProjectService $projectService;
     protected TaskService $taskService;
-    protected Sql $addTask;
+    protected Sql $task;
     private StoreTaskRequest $request;
     private $validation;
 
@@ -35,7 +38,7 @@ class KanbanController extends BaseController
         $this->addTaskFormTemplateService   = new AddTaskFormTemplateService();
         $this->projectService               = new ProjectService();
         $this->taskService                  = new TaskService();
-        $this->addTask                      = new Sql();
+        $this->task                         = new Sql();
         $this->request                      = new StoreTaskRequest();
         $this->mainSideBar                  = new MainSidebarService();
         $this->navbarService                = new NavbarService();
@@ -129,7 +132,7 @@ class KanbanController extends BaseController
                 ':user_id'      => $_SESSION['user']['id'],
             ];
 
-            $this->addTask->query($sql, $data);
+            $this->task->query($sql, $data);
 
             header("Location: /");
         }

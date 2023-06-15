@@ -34,7 +34,7 @@ session_start();
             <p class="login-box-msg">Зареєструватися</p>
 
             <form action="register.php" method="POST">
-                <div class="input-group mb-3 <?php echo (isset($errors['name'])) ? 'is-invalid' : '' ?>">
+                <div class="input-group <?php echo (isset($errors['name'])) ? 'is-invalid' : 'mb-3' ?>">
                     <label for="name"></label>
                     <input type="text"
                            class="form-control <?php echo (isset($errors['name'])) ? 'is-invalid' : '' ?>"
@@ -57,7 +57,7 @@ session_start();
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <div class="input-group mb-3 <?php echo (isset($errors['email'])) ? 'is-invalid' : '' ?>">
+                <div class="input-group <?php echo (isset($errors['email'])) ? 'is-invalid' : 'mb-3' ?>">
                     <label for="email"></label>
                     <input type="email"
                            class="form-control <?php echo (isset($errors['email'])) ? 'is-invalid' : '' ?>"
@@ -80,8 +80,7 @@ session_start();
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <div class="input-group mb-3 <?php echo (isset($errors['password'])
-                    || isset($errors['password_confirmation'])) ? 'is-invalid' : '' ?>">
+                <div class="input-group <?php echo (isset($errors['password'])) ? 'is-invalid' : 'mb-3' ?>">
                     <label for="password"></label>
                     <input type="password"
                            class="form-control <?php echo (isset($errors['password'])
@@ -103,8 +102,8 @@ session_start();
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <div class="input-group mb-3 <?php echo (isset($errors['password_confirmation']))
-                    ? 'is-invalid' : '' ?>">
+                <div class="input-group <?php echo (isset($errors['password_confirmation']))
+                    ? 'is-invalid' : 'mb-3' ?>">
                     <label for="password_confirmation"></label>
                     <input type="password"
                            class="form-control <?php echo (isset($errors['password_confirmation']))
@@ -142,7 +141,7 @@ session_start();
                 </div>
             </form>
 
-            <a href="#" class="text-center">В мене вже є аккаунт</a>
+            <a href="auth.php" class="text-center">В мене вже є аккаунт</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->

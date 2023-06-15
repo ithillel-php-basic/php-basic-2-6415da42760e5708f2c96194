@@ -1,10 +1,12 @@
 <?php
 namespace controllers;
 
+use databases\Sql;
 use helpers\TemplateRenderer;
 use JetBrains\PhpStorm\NoReturn;
 use middlewares\AuthenticationMiddleware;
 use requests\LoginRequest;
+use requests\RegisterRequest;
 use services\UserService;
 
 class AuthController extends BaseController
@@ -14,47 +16,74 @@ class AuthController extends BaseController
     protected UserService $userService;
     private LoginRequest $request;
     private $validation;
-    private $authMiddleware;
+    private Sql $user;
 
     public function __construct()
     {
         $this->userService = new UserService();
         $this->request = new LoginRequest();
+        $this->user = new Sql();
+    }
+
+    public function prepareRegister(): string
+    {
+        $this->isUserLoggedIn();
+
+        $title = 'Завдання та проекти | Реєстрація нового користувача';
+
+        return TemplateRenderer::execute('register.php', [
+            'title' => $title,
+        ] + $this->params($this->validation));
+    }
+
+    public function register()
+    {
+        $this->isUserLoggedIn();
+
+        $request = new RegisterRequest();
+        $sql = 'INSERT INTO users (name, email, password, created_at)
+                VALUES (:name, :email, :password, CURRENT_DATE)';
+
+        $request->setData($_POST['name'], $_POST['email'], $_POST['password'], $_POST['password_confirmation']);
+        $this->validation = $request->afterValidation();
+
+
+        if (!$this->validation->fails()) {
+            $validated = $this->validation->getValidData();
+
+            $data = [
+                ':name'     => $validated['name'],
+                ':email'    => $validated['email'],
+                ':password' => password_hash($validated['password'], PASSWORD_DEFAULT),
+            ];
+
+            $this->user->query($sql, $data);
+
+            $currentUser = $this->userService->findByEmail($validated['email']);
+            $this->loggedIn($currentUser['id'], $currentUser['name'], $currentUser['email']);
+        }
     }
 
     public function prepareLogin(): string
     {
-        $params = [
-            'errors'    => null,
-            'oldValues' => null
-        ];
+        $this->isUserLoggedIn();
 
-        if (isset($this->validation)) {
-            $params = [
-                'errors' => $this->validation->errors()->toArray(),
-                'oldValues' => $this->validation->getValidatedData(),
-            ];
-        }
-
-        return TemplateRenderer::execute('auth.php', $params);
+        return TemplateRenderer::execute('auth.php', $this->params($this->validation));
     }
 
 
     #[NoReturn]
     public function login()
     {
+        $this->isUserLoggedIn();
+
         $user = $this->userService->findByEmail($_POST['email']);
 
         $this->request->setData($_POST['email'], $_POST['password'], $user);
         $this->validation = $this->request->afterValidation();
 
         if (!$this->validation->fails()) {
-            $_SESSION['user']['id'] = $user['id'];
-            $_SESSION['user']['name'] = $user['name'];
-            $_SESSION['user']['email'] = $user['email'];
-
-            header("Location: /");
-            exit();
+            $this->loggedIn($user['id'], $user['name'], $user['email']);
         }
     }
 

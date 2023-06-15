@@ -93,7 +93,7 @@ include_once 'vendor\autoload.php';
             </form>
 
             <p class="mb-0">
-                <a href="#" class="text-center">Зареєструватися</a>
+                <a href="register.php" class="text-center">Зареєструватися</a>
             </p>
         </div>
         <!-- /.card-body -->

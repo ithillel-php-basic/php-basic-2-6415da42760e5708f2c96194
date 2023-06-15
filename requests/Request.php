@@ -4,6 +4,7 @@ namespace requests;
 
 use Rakit\Validation\RuleQuashException;
 use Rakit\Validation\Rules\Exists;
+use Rakit\Validation\Rules\Unique;
 use Rakit\Validation\Validation;
 use Rakit\Validation\Validator;
 
@@ -16,6 +17,7 @@ class Request extends Validator
     {
         parent::__construct($messages);
         $this->addValidator('exists', new Exists());
+        $this->addValidator('unique', new Unique());
     }
 
     /**

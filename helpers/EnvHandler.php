@@ -10,7 +10,10 @@ class EnvHandler
      */
     public static function parseFile(): array
     {
-        $env = realpath("."). "\\.env";
+        $env = realpath("."). "/.env";
+        if (!file_exists($env)) {
+            die('Файл .env не знайдено.');
+        }
 
         $fileContent = file_get_contents($env);
         $lines = explode(PHP_EOL, $fileContent);

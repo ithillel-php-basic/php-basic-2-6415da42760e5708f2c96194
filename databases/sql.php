@@ -65,4 +65,9 @@ class Sql extends Database
     {
         return $this->stmt->fetch($mode);
     }
+
+    public function fetchColumn()
+    {
+        return $this->stmt->fetchColumn();
+    }
 }

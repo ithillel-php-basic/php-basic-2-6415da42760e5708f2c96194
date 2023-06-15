@@ -10,7 +10,7 @@ class Unique extends Rule
 {
     protected $message = ":attribute :value has been used";
 
-    protected $fillableParams = ['table', 'column', 'except'];
+    protected $fillableParams = ['table', 'column'];
 
     protected Sql $connection;
 
@@ -30,17 +30,13 @@ class Unique extends Rule
         // getting parameters
         $column = $this->parameter('column');
         $table = $this->parameter('table');
-        $except = $this->parameter('except');
-
-        if ($except && $except == $value) {
-            return true;
-        }
 
         // do query
-        $sql = 'SELECT count(*) AS count FROM %s WHERE %s = :value';
-        $data = $this->connection->query(sprintf($sql, $table, $column), [':value' => $value])->first();
+        $sql = "SELECT * FROM {$table} WHERE {$column} = :value";
+        $data = $this->connection->query($sql, [':value' => $value]);
+        $count = $data->fetchColumn();
 
         // true for valid, false for invalid
-        return intval($data['count']) === 0;
+        return !($count > 0);
     }
 }

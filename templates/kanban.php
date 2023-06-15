@@ -48,16 +48,14 @@ use services\TaskService;
                 </div>
                 <div class="card-body connectedSortable" data-status="backlog">
                     <?php foreach ($tasks as $key => $task) : ?>
-                        <?php
-                        if ($task['status'] === 'backlog'
-                            && isset($projectId)
-                            && $task['project_id'] === $projectId) :
-                            ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                        <?php if ($task['status'] === 'backlog'
+                                && isset($projectId)
+                                && $task['project_id'] === $projectId) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -84,11 +82,11 @@ use services\TaskService;
                         <?php endif; ?>
 
                         <?php if ($task['status'] === 'backlog' && !isset($projectId)) : ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -124,16 +122,14 @@ use services\TaskService;
                 </div>
                 <div class="card-body connectedSortable" data-status="to-do">
                     <?php foreach ($tasks as $key => $task) : ?>
-                        <?php
-                        if ($task['status'] === 'to-do'
-                            && isset($projectId)
-                            && $task['project_id'] === $projectId) :
-                            ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                        <?php if ($task['status'] === 'to-do'
+                                && isset($projectId)
+                                && $task['project_id'] === $projectId) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -160,11 +156,11 @@ use services\TaskService;
                         <?php endif; ?>
 
                         <?php if ($task['status'] === 'to-do' && !isset($projectId)) : ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -200,16 +196,14 @@ use services\TaskService;
                 </div>
                 <div class="card-body connectedSortable" data-status="in-progress">
                     <?php foreach ($tasks as $key => $task) : ?>
-                        <?php
-                        if ($task['status'] === 'in-progress'
+                        <?php if ($task['status'] === 'in-progress'
                                 && isset($projectId)
-                                && $task['project_id'] === $projectId) :
-                            ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                                && $task['project_id'] === $projectId) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -236,11 +230,11 @@ use services\TaskService;
                         <?php endif; ?>
 
                         <?php if ($task['status'] === 'in-progress' && !isset($projectId)) : ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -281,11 +275,11 @@ use services\TaskService;
                                 && isset($projectId)
                                 && $task['project_id'] === $projectId) :
                             ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -307,11 +301,11 @@ use services\TaskService;
                         <?php endif; ?>
 
                         <?php if ($task['status'] === 'done' && !isset($projectId)) : ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
