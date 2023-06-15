@@ -3,13 +3,11 @@
 namespace controllers;
 
 use databases\Sql;
-use Exception;
 use helpers\ErrorHandler;
 use helpers\GlobalArrayHandler;
 use helpers\ProjectHandler;
 use helpers\TemplateRenderer;
 use middlewares\AuthenticationMiddleware;
-use requests\Request;
 use requests\StoreTaskRequest;
 use requests\UpdateTaskStatus;
 use services\AddTaskFormTemplateService;
@@ -64,24 +62,12 @@ class KanbanController extends BaseController
         $this->handle();
         $title = 'Завдання та проекти | Створити задачу';
 
-        $params = [
-            'errors'    => null,
-            'oldValues' => null
-        ];
-
-        if (isset($this->validation)) {
-            $params = [
-                'errors' => $this->validation->errors()->toArray(),
-                'oldValues' => $this->validation->getValidatedData(),
-            ];
-        }
-
         $body = TemplateRenderer::execute('addTaskForm.php', [
             'mainSidebar'   => $this->mainSideBar->render(),
             'navbar'        => $this->navbarService->render(),
             'projects'      => $this->projectService->getAll(),
             'projectId'     => GlobalArrayHandler::getStringToInt('project_id'),
-        ] + $params);
+        ] + $this->params($this->validation));
 
         return TemplateRenderer::execute('layout.php', [
             'title' => $title,
@@ -135,6 +121,35 @@ class KanbanController extends BaseController
             $this->task->query($sql, $data);
 
             header("Location: /");
+        }
+    }
+
+    /**
+     * Оновлює статус завдання
+     *
+     * @return void
+     */
+    public function updateStatus(): void
+    {
+        $data = json_decode((file_get_contents('php://input')), true);
+
+        $request = new UpdateTaskStatus();
+        $request->setData($data['id'], $data['status']);
+        $validation = $request->afterValidation();
+
+        if (!$validation->fails()) {
+            $validated = $request->validated();
+
+            $sql = 'UPDATE tasks SET status = :status WHERE id = :id AND user_id = :user_id';
+            $this->task->query($sql, [
+            ':status'   => $validated['status'],
+            ':id'       => $validated['id'],
+            ':user_id'  => $_SESSION['user']['id'],
+            ]);
+
+            $response = ['status' => 'OK'];
+
+            echo json_encode($response);
         }
     }
 }
