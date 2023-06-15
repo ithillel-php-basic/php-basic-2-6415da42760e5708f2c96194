@@ -15,7 +15,6 @@ class TaskService
 
     public function getUserTasks(): bool|array
     {
-        session_start();
         $data = [];
         $data[':user_id'] = $_SESSION['user']['id'];
 

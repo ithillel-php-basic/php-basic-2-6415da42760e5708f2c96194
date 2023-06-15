@@ -1,6 +1,9 @@
 <?php
-include_once 'vendor\autoload.php';
+include_once 'vendor/autoload.php';
+
+use controllers\AuthController;
+
 session_start();
 
-$authController = new \controllers\AuthController();
+$authController = new AuthController();
 $authController->logout();

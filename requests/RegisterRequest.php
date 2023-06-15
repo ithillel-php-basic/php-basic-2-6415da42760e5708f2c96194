@@ -36,7 +36,7 @@ class RegisterRequest extends Request
         return [
             'name'      => [
                 'required',
-                'alpha',
+                'alpha_spaces',
             ],
             'email'     => [
                 'required',
