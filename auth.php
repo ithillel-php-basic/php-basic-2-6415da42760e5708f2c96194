@@ -3,10 +3,10 @@ require_once 'vendor/autoload.php';
 use controllers\AuthController;
 
 session_start();
-$authController = new AuthController();
+$auth = new AuthController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $authController->register();
+    $auth->login();
 }
 
-echo $authController->prepareRegister();
+echo $auth->prepareLogin();

@@ -1,9 +1,13 @@
 <?php
+
 /**
- * @var array $tasks
+ * @var TaskService $tasks
  * @var string $pageTitle
- * @var string|null $projectId
+ * @var int|null $projectId
  */
+
+use helpers\DateHandler;
+use services\TaskService;
 
 ?>
 <div class="content-wrapper kanban">
@@ -43,13 +47,15 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="backlog">
-                    <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'backlog' && isset($projectId) && $task['project_id'] === $projectId): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                    <?php foreach ($tasks as $key => $task) : ?>
+                        <?php if ($task['status'] === 'backlog'
+                                && isset($projectId)
+                                && $task['project_id'] === $projectId) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -57,28 +63,30 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
+                            <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                            <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
-                                    <?php endif; ?>
-                                    <?php
-                                    if (!is_null($task['deadline'])):
-                                        echo getTimeRemain($task['deadline']);
-                                    endif;
-                                    ?>
+                            <?php endif; ?>
+                            <?php
+                            if (!is_null($task['deadline'])) :
+                                echo DateHandler::timeRemains($task['deadline']);
+                            endif;
+                            ?>
                                 </div>
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'backlog' && !isset($projectId)): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                        <?php if ($task['status'] === 'backlog' && !isset($projectId)) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -88,14 +96,16 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                    <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
                                     <?php endif; ?>
                                     <?php
-                                    if (!is_null($task['deadline'])):
-                                        echo getTimeRemain($task['deadline']);
+                                    if (!is_null($task['deadline'])) :
+                                        echo DateHandler::timeRemains($task['deadline']);
                                     endif;
                                     ?>
                                 </div>
@@ -111,13 +121,15 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="to-do">
-                    <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'to-do' && isset($projectId) && $task['project_id'] === $projectId): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                    <?php foreach ($tasks as $key => $task) : ?>
+                        <?php if ($task['status'] === 'to-do'
+                                && isset($projectId)
+                                && $task['project_id'] === $projectId) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -127,26 +139,28 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                    <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
                                     <?php endif; ?>
                                     <?php
-                                    if (!is_null($task['deadline'])):
-                                        echo getTimeRemain($task['deadline']);
+                                    if (!is_null($task['deadline'])) :
+                                        echo DateHandler::timeRemains($task['deadline']);
                                     endif;
                                     ?>
                                 </div>
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'to-do' && !isset($projectId)): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                        <?php if ($task['status'] === 'to-do' && !isset($projectId)) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -156,14 +170,16 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                    <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
                                     <?php endif; ?>
                                     <?php
-                                    if (!is_null($task['deadline'])):
-                                        echo getTimeRemain($task['deadline']);
+                                    if (!is_null($task['deadline'])) :
+                                        echo DateHandler::timeRemains($task['deadline']);
                                     endif;
                                     ?>
                                 </div>
@@ -179,13 +195,15 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="in-progress">
-                    <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'in-progress' && isset($projectId) && $task['project_id'] === $projectId): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                    <?php foreach ($tasks as $key => $task) : ?>
+                        <?php if ($task['status'] === 'in-progress'
+                                && isset($projectId)
+                                && $task['project_id'] === $projectId) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -193,28 +211,30 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
+                                    <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
-                                    <?php endif; ?>
-                                    <?php
-                                    if (!is_null($task['deadline'])):
-                                        echo getTimeRemain($task['deadline']);
-                                    endif;
-                                    ?>
+                                <?php endif; ?>
+                                <?php
+                                if (!is_null($task['deadline'])) :
+                                    echo DateHandler::timeRemains($task['deadline']);
+                                endif;
+                                ?>
                                 </div>
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'in-progress' && !isset($projectId)): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                        <?php if ($task['status'] === 'in-progress' && !isset($projectId)) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -224,14 +244,16 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                    <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
                                     <?php endif; ?>
                                     <?php
-                                    if (!is_null($task['deadline'])):
-                                        echo getTimeRemain($task['deadline']);
+                                    if (!is_null($task['deadline'])) :
+                                        echo DateHandler::timeRemains($task['deadline']);
                                     endif;
                                     ?>
                                 </div>
@@ -247,13 +269,17 @@
                     </h3>
                 </div>
                 <div class="card-body connectedSortable" data-status="done">
-                    <?php foreach($tasks as $key => $task): ?>
-                        <?php if($task['status'] === 'done' && isset($projectId) && $task['project_id'] === $projectId): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                    <?php foreach ($tasks as $key => $task) : ?>
+                        <?php
+                        if ($task['status'] === 'done'
+                                && isset($projectId)
+                                && $task['project_id'] === $projectId) :
+                            ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key++ ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -261,23 +287,25 @@
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        <?php echo htmlspecialchars($task['description'] ?? '') ?>
+                                    <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
-                                    <?php endif; ?>
+                                <?php endif; ?>
                                 </div>
                             </div>
                         <?php endif; ?>
 
-                        <?php if ($task['status'] === 'done' && !isset($projectId)): ?>
-                            <div class="card card-info card-outline" data-task-id="<?php echo $key++ ?>">
+                        <?php if ($task['status'] === 'done' && !isset($projectId)) : ?>
+                            <div class="card card-info card-outline" data-task-id="<?php echo $task['id'] ?>">
                                 <div class="card-header">
                                     <h5 class="card-title"><?php echo htmlspecialchars($task['title']) ?></h5>
                                     <div class="card-tools">
-                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$key ?></a>
+                                        <a href="#" class="btn btn-tool btn-link"><?php echo '#'.$task['id'] ?></a>
                                         <a href="#" class="btn btn-tool">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -287,8 +315,10 @@
                                     <p>
                                         <?php echo htmlspecialchars($task['description'] ?? '') ?>
                                     </p>
-                                    <?php if (!is_null($task['file'])): ?>
-                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>" class="btn btn-tool">
+                                    <?php if (!is_null($task['file'])) : ?>
+                                        <a href="<?php echo 'downloadDoc.php?file='.urlencode($task['file']) ?>"
+                                           class="btn btn-tool"
+                                        >
                                             <i class="fas fa-file"></i>
                                         </a>
                                     <?php endif; ?>

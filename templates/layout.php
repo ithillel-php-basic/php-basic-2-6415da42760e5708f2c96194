@@ -1,7 +1,10 @@
 <?php
+
+use services\MainTemplateService;
+
 /**
  * @var string $title
- * @var resource $body
+ * @var MainTemplateService $body
  */
 ?>
 <!DOCTYPE html>
@@ -28,6 +31,9 @@
     <!-- toastr styles -->
     <link rel="stylesheet" href="../static/plugins/toastr/toastr.min.css">
 
+    <?php if (!isset($_SESSION['user'])) : ?>
+    <link rel="stylesheet" href="../static/css/cover.css">
+    <?php endif; ?>
 </head>
 <?php echo $body ?>
 

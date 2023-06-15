@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array $projects
  * @var array $user
@@ -25,6 +26,9 @@
             <div class="info">
                 <a href="#" class="d-block"><?php echo htmlspecialchars($user['name']); ?></a>
             </div>
+            <div class="info">
+                <a href="/logout.php" class="d-block"><button class="btn btn-sm btn-danger">Вийти</button></a>
+            </div>
         </div>
 
         <!-- Sidebar Menu -->
@@ -32,8 +36,8 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                    with font-awesome or any other icon font library -->
-                <?php foreach ($projects as $key => $project):?>
-                    <?php if ($key === array_key_first($projects)): ?>
+                <?php foreach ($projects as $key => $project) :?>
+                    <?php if ($key === array_key_first($projects)) :?>
                         <li class="nav-item">
                             <a href="/"
                                class="nav-link <?php echo (!isset($projectId)) ? 'active' : ''; ?>"
@@ -49,23 +53,23 @@
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
-                        <a href="/?project_id=<?php echo urlencode($project['id'])?>" class="nav-link
+                        <a href="/?project_id=<?php echo urlencode($project['id']) ?>" class="nav-link
                         <?php
-                        if (isset($projectId)):
+                        if (isset($projectId)) :
                             echo ($project['id'] === $projectId) ? 'active' : '';
                         endif;
                         ?>">
                         <i class="nav-icon fas fa-columns"></i>
                         <p>
                             <?php echo htmlspecialchars($project['title']) ?>
-                            <span class="badge badge-info right"><?php echo $project['countTasks']?></span>
+                            <span class="badge badge-info right"><?php echo $project['countTasks'] ?></span>
                         </p>
                         </a>
                     </li>
                 <?php endforeach; ?>
                 <li class="nav-item">
                     <!-- додати bg-olive, якщо посилання активне -->
-                    <a href="../index.php" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-plus"></i>
                         <p>
                             Додати проект
