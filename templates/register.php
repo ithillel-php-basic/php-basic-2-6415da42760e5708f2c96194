@@ -1,5 +1,4 @@
 <?php
-session_start();
 /**
  * @var string $title
  * @var array $errors

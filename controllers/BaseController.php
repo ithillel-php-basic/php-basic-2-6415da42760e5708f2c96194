@@ -12,8 +12,6 @@ abstract class BaseController
      */
     protected function loggedIn($id, $name, $email) : void
     {
-        session_start();
-
         $_SESSION['user']['id'] = $id;
         $_SESSION['user']['name'] = $name;
         $_SESSION['user']['email'] = $email;
@@ -29,8 +27,6 @@ abstract class BaseController
      */
     protected function isUserLoggedIn() : void
     {
-        session_start();
-
         if (isset($_SESSION['user'])) {
             header("Location: /");
         }

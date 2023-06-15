@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 /**
  * @var string|null $projectId
  * @var string $url

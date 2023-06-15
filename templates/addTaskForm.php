@@ -1,5 +1,4 @@
 <?php
-session_start();
 /**
  * @var resource $mainSidebar
  * @var resource $navbar
@@ -8,7 +7,6 @@ session_start();
  * @var array $errors
  * @var array $oldValues
  */
-
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

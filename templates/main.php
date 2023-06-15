@@ -1,5 +1,4 @@
 <?php
-session_start();
 use services\KanbanService;
 use services\MainSidebarService;
 use services\NavbarService;

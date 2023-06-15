@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php ?>
 <!doctype html>
 <html lang="uk">
 <head>

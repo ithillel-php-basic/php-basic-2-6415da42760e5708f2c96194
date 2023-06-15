@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 /**
  * @var array $projects
  * @var array $user
@@ -69,7 +69,7 @@ session_start();
                 <?php endforeach; ?>
                 <li class="nav-item">
                     <!-- додати bg-olive, якщо посилання активне -->
-                    <a href="../index.php" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-plus"></i>
                         <p>
                             Додати проект
