@@ -14,8 +14,6 @@ class DocumentService
 
     public function downloadFromKanban()
     {
-        session_start();
-
         return $this->document->query('SELECT * FROM tasks WHERE file = :filename AND user_id = :user_id', [
             ':filename' => $_GET['file'],
             ':user_id'  => $_SESSION['user']['id']

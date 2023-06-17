@@ -1,7 +1,8 @@
 <?php
 namespace helpers;
 
-Class TemplateRenderer {
+class TemplateRenderer
+{
 
     /**
      * Підключає шаблон, передає туди дані і повертає підсумковий HTML контент
@@ -26,5 +27,18 @@ Class TemplateRenderer {
         $result = ob_get_clean();
 
         return $result;
+    }
+
+
+    /**
+     * Рендерить помилку при непройденій валідації.
+     * Приклад: TemplateRenderer::errorTemplate($error, 'title')
+     *
+     */
+    public static function errorTemplate(string $error, string $nameId): string
+    {
+        return <<<HTML
+        <span id="{$nameId}-error" class="error invalid-feedback">{$error}</span>
+        HTML;
     }
 }

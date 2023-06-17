@@ -1,8 +1,10 @@
 <?php
-    namespace services;
+namespace services;
 
-    use databases\Sql;
-    use helpers\GlobalArrayHandler;
+use Carbon\Carbon;
+use databases\Sql;
+use helpers\ErrorHandler;
+use helpers\GlobalArrayHandler;
 
 class TaskService
 {
@@ -27,6 +29,24 @@ class TaskService
         if (isset($_GET['project_id'])) {
             $data[':project_id'] = GlobalArrayHandler::getStringToInt('project_id');
             $sql .= ' AND t.project_id = :project_id';
+        }
+        if (isset($_GET['filter'])) {
+            $data[':deadline'] = Carbon::now()->format('Y-m-d');
+
+            switch ($_GET['filter']) {
+                case 'today':
+                    $sql .= ' AND t.deadline = :deadline';
+                    break;
+                case 'expired':
+                    $sql .= ' AND t.deadline < :deadline';
+                    break;
+                case 'tomorrow':
+                    $data[':deadline'] = Carbon::tomorrow()->format('Y-m-d');
+                    $sql .= ' AND t.deadline = :deadline';
+                    break;
+                default:
+                    ErrorHandler::setStatus('404');
+            }
         }
         $sql .= ' GROUP BY t.id ORDER BY id DESC';
 

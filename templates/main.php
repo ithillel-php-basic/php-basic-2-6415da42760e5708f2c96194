@@ -1,12 +1,12 @@
 <?php
 use services\KanbanService;
-use services\MainSidebarService;
-use services\NavbarService;
+use services\MainSidebarTemplateService;
+use services\NavbarTemplateService;
 
 /**
  * @var KanbanService $kanbanTemplate
- * @var NavbarService $navbarTemplate
- * @var MainSidebarService $mainSidebarTemplate
+ * @var NavbarTemplateService $navbarTemplate
+ * @var MainSidebarTemplateService $mainSidebarTemplate
  */
 
 ?>
@@ -54,7 +54,4 @@ use services\NavbarService;
 <script src="../static/plugins/filterizr/jquery.filterizr.min.js"></script>
 <!-- Page specific script -->
 <script src="../static/js/kanban.js"></script>
-<!-- toastr script -->
-<script src="../static/plugins/toastr/toastr.min.js"></script>
-<script src="../static/js/toastrMessages.js"></script>
 </body>

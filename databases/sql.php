@@ -70,4 +70,9 @@ class Sql extends Database
     {
         return $this->stmt->fetchColumn();
     }
+
+    public function rowCount(): int
+    {
+        return $this->stmt->rowCount();
+    }
 }

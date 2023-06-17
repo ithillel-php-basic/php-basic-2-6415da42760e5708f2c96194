@@ -4,7 +4,6 @@
  * @var string|null $projectId
  * @var string $url
  * @var string $queryStr
- * @var string $pageName
  */
 
 ?>
@@ -18,14 +17,14 @@
             <a href="/" class="nav-link <?php echo ($url === '/'.$queryStr) ? 'disabled' : '' ?>">Дошка</a>
         </li>
         <li class="nav-item
-            <?php echo (str_contains($url, $pageName))
+            <?php echo str_contains($url, 'add.php')
             ? 'bg-secondary'
             : 'bg-primary'
             ?>
             d-none
             d-sm-inline-block">
             <a href="<?php echo (isset($projectId)) ? '/add.php?project_id='.urlencode($projectId) : '/add.php' ?>"
-               class="nav-link <?php echo (str_contains($url, $pageName)) ? 'disabled' : '' ?>">Створити задачу</a>
+               class="nav-link <?php echo str_contains($url, 'add.php') ? 'disabled' : '' ?>">Створити задачу</a>
         </li>
     </ul>
 

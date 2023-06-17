@@ -28,8 +28,6 @@ use services\MainTemplateService;
     <link rel="stylesheet" href="../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- custom kanban styles -->
     <link rel="stylesheet" href="../static/css/kanban.css">
-    <!-- toastr styles -->
-    <link rel="stylesheet" href="../static/plugins/toastr/toastr.min.css">
 
     <?php if (!isset($_SESSION['user'])) : ?>
     <link rel="stylesheet" href="../static/css/cover.css">

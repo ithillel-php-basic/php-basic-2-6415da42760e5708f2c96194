@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 
+use helpers\ErrorHandler;
 use JetBrains\PhpStorm\NoReturn;
 use services\DocumentService;
 
@@ -19,9 +20,7 @@ class DocumentController extends BaseController
         $document = $this->document->downloadFromKanban();
 
         if (!isset($document['file']) || !file_exists('storage/'.$document['file'])) {
-            http_response_code(404);
-            include('templates/404.php');
-            exit();
+            ErrorHandler::setStatus('404');
         }
 
         header('Content-Disposition: attachment; filename="'.$document['file'].'"');

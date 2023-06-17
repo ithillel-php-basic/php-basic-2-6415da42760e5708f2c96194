@@ -6,15 +6,15 @@ use helpers\TemplateRenderer;
 class MainTemplateService extends TemplateService
 {
     protected KanbanService $kanbanTemplate;
-    protected NavbarService $navbarTemplate;
-    protected MainSidebarService $mainSidebarTemplate;
+    protected NavbarTemplateService $navbarTemplate;
+    protected MainSidebarTemplateService $mainSidebarTemplate;
 
     public function __construct()
     {
         parent::__construct();
         $this->kanbanTemplate = new KanbanService();
-        $this->navbarTemplate = new NavbarService();
-        $this->mainSidebarTemplate = new MainSidebarService();
+        $this->navbarTemplate = new NavbarTemplateService();
+        $this->mainSidebarTemplate = new MainSidebarTemplateService();
     }
 
     public function render(): string

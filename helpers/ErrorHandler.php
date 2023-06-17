@@ -12,7 +12,8 @@ class ErrorHandler
      * @param string $code
      * @return void
      */
-    #[NoReturn] public static function setStatus(string $code): void
+    #[NoReturn]
+    public static function setStatus(string $code): void
     {
         switch ($code) {
             case '404':

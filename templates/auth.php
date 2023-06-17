@@ -3,6 +3,9 @@
  * @var array $errors
  * @var array $oldValues
  */
+
+use helpers\TemplateRenderer;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +47,7 @@
                            id="email"
                            name="email"
                            value="<?php echo isset($oldValues['email']) ? htmlentities($oldValues['email']) : '' ?>"
+                           required
                     >
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -54,7 +58,7 @@
                 <?php
                 if (isset($errors['email'])) :
                     foreach ($errors['email'] as $error) :
-                        echo '<span id="email-error" class="error invalid-feedback">'. $error .'</span>';
+                        echo TemplateRenderer::errorTemplate($error, 'email');
                     endforeach;
                 endif;
                 ?>
@@ -67,6 +71,7 @@
                            placeholder="Password"
                            id="password"
                            name="password"
+                           required
                     >
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -77,7 +82,7 @@
                 <?php
                 if (isset($errors['password'])) :
                     foreach ($errors['password'] as $error) :
-                        echo '<span id="password-error" class="error invalid-feedback">'. $error .'</span>';
+                        echo TemplateRenderer::errorTemplate($error, 'password');
                     endforeach;
                 endif;
                 ?>

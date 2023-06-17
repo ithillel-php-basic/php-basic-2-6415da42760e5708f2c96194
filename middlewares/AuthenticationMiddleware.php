@@ -6,7 +6,6 @@ trait AuthenticationMiddleware
 {
     public function handle(): void
     {
-//        session_start();
         if ($this->isAuthed() === false) {
             header("Location: /auth.php");
         }

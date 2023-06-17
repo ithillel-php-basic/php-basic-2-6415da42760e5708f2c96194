@@ -176,8 +176,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <a href="#" class="btn btn-secondary">Відмініти</a>
-                        <input type="submit" value="Створити нову задачу" class="btn btn-success">
+                        <input type="submit" value="Створити" class="btn btn-success">
                     </div>
                 </div>
             </form>

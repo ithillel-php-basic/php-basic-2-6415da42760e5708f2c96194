@@ -5,7 +5,7 @@ use helpers\GlobalArrayHandler;
 use helpers\ProjectHandler;
 use helpers\TemplateRenderer;
 
-class MainSidebarService extends TemplateService
+class MainSidebarTemplateService extends TemplateService
 {
     protected UserService $userService;
     protected TaskService $taskService;
@@ -27,6 +27,8 @@ class MainSidebarService extends TemplateService
             'projects'      => $this->projectService->getAll(),
             'tasks'         => $this->taskService->getUserTasks(),
             'projectId'     => GlobalArrayHandler::getStringToInt('project_id'),
+            'url'           => $_SERVER['REQUEST_URI'],
+            'filter'        => $_GET['filter'] ?? null,
         ]);
     }
 }
