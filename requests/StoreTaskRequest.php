@@ -1,4 +1,5 @@
 <?php
+
 namespace requests;
 
 use Carbon\Carbon;
@@ -41,8 +42,8 @@ class StoreTaskRequest extends Request
         return [
             'title'         => 'required',
             'description'   => 'nullable',
-            'project'       => 'required|exists:projects,id,'.$this->project,
-            'deadline'      => 'nullable|date:Y-m-d|after:'.$this->yesterday,
+            'project'       => 'required|exists:projects,id,' . $this->project,
+            'deadline'      => 'nullable|date:Y-m-d|after:' . $this->yesterday,
             'file'          => 'uploaded_file:0,2M'
         ];
     }

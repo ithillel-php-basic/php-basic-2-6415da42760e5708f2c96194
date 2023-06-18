@@ -1,11 +1,11 @@
 <?php
+
+use helpers\TemplateRenderer;
+
 /**
  * @var array $errors
  * @var array $oldValues
  */
-
-use helpers\TemplateRenderer;
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

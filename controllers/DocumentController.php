@@ -1,4 +1,5 @@
 <?php
+
 namespace controllers;
 
 use helpers\ErrorHandler;
@@ -19,12 +20,12 @@ class DocumentController extends BaseController
     {
         $document = $this->document->downloadFromKanban();
 
-        if (!isset($document['file']) || !file_exists('storage/'.$document['file'])) {
+        if (!isset($document['file']) || !file_exists('storage/' . $document['file'])) {
             ErrorHandler::setStatus('404');
         }
 
-        header('Content-Disposition: attachment; filename="'.$document['file'].'"');
-        readfile('storage/'.$document['file']);
+        header('Content-Disposition: attachment; filename="' . $document['file'] . '"');
+        readfile('storage/' . $document['file']);
         exit();
     }
 }

@@ -1,11 +1,9 @@
 <?php
-
 /**
  * @var string|null $projectId
  * @var string $url
  * @var string $queryStr
  */
-
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -14,7 +12,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/" class="nav-link <?php echo ($url === '/'.$queryStr) ? 'disabled' : '' ?>">Дошка</a>
+            <a href="/" class="nav-link <?php echo ($url === '/' . $queryStr) ? 'disabled' : '' ?>">Дошка</a>
         </li>
         <li class="nav-item
             <?php echo str_contains($url, 'add.php')
@@ -23,7 +21,7 @@
             ?>
             d-none
             d-sm-inline-block">
-            <a href="<?php echo (isset($projectId)) ? '/add.php?project_id='.urlencode($projectId) : '/add.php' ?>"
+            <a href="<?php echo (isset($projectId)) ? '/add.php?project_id=' . urlencode($projectId) : '/add.php' ?>"
                class="nav-link <?php echo str_contains($url, 'add.php') ? 'disabled' : '' ?>">Створити задачу</a>
         </li>
     </ul>

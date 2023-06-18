@@ -1,9 +1,9 @@
 <?php
+
 namespace helpers;
 
 class TemplateRenderer
 {
-
     /**
      * Підключає шаблон, передає туди дані і повертає підсумковий HTML контент
      *

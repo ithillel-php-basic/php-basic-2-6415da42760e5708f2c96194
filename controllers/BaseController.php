@@ -10,7 +10,7 @@ abstract class BaseController
     /**
      * Записує у сесію дані користувача.
      */
-    protected function loggedIn($id, $name, $email) : void
+    protected function loggedIn(int $id, string $name, string $email): void
     {
         $_SESSION['user']['id'] = $id;
         $_SESSION['user']['name'] = $name;
@@ -25,7 +25,7 @@ abstract class BaseController
      *
      * @return void
      */
-    protected function isUserLoggedIn() : void
+    protected function isUserLoggedIn(): void
     {
         if (isset($_SESSION['user'])) {
             header("Location: /");
