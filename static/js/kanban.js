@@ -17,7 +17,7 @@ $(function () {
                     id: $(ui.item[0]).data('task-id'),
                     status: $(ui.item[0].parentElement).data('status')
                 })
-            })
+            }).then(response => response.json())
         }
     })
     $('.connectedSortable .card-header').css('cursor', 'move')

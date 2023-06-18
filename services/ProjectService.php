@@ -23,4 +23,16 @@ class ProjectService
 
         return $this->projects->query($sql, [':user_id' => $_SESSION['user']['id']])->get();
     }
+
+    public function countProjectsByTitle($value)
+    {
+        $sql = 'SELECT COUNT(*) FROM projects WHERE title = :title AND user_id = :user_id';
+
+        $projects = $this->projects->query($sql, [
+            ':title'    => $value,
+            ':user_id'  => $_SESSION['user']['id']
+        ]);
+
+        return $projects->fetchColumn();
+    }
 }

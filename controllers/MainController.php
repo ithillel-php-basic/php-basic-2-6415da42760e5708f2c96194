@@ -7,7 +7,6 @@ use helpers\TemplateRenderer;
 use services\MainTemplateService;
 use services\ProjectService;
 
-
 class MainController extends BaseController
 {
     protected MainTemplateService $mainTemplate;

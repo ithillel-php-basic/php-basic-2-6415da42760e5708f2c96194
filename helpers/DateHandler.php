@@ -32,6 +32,7 @@ class DateHandler
             '<small class="badge %s" title="%s"><i class="far fa-clock"></i> %s</small>',
             $badgeClass,
             $date,
-            $value);
+            $value
+        );
     }
 }

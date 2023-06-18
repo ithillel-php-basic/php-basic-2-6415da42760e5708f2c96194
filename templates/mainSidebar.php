@@ -5,7 +5,10 @@
  * @var array $user
  * @var string $userPhoto
  * @var int|null $projectId
+ * @var string $url,
+ * @var string $filter,
  */
+
 
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -39,9 +42,9 @@
                 <?php foreach ($projects as $key => $project) :?>
                     <?php if ($key === array_key_first($projects)) :?>
                         <li class="nav-item">
-                            <a href="/"
-                               class="nav-link <?php echo (!isset($projectId)) ? 'active' : ''; ?>"
-                            >
+                            <a href="/<?php echo isset($filter) ? '?filter='.$filter : ''; ?>"
+                               class="nav-link <?php echo (!isset($projectId) && str_contains($url, 'filter')
+                                || $url === '/' ? 'active' : ($url === '/add.php' ? 'active' : '')); ?>">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>
                                     Всі
@@ -53,7 +56,9 @@
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
-                        <a href="/?project_id=<?php echo urlencode($project['id']) ?>" class="nav-link
+                        <a href="/?project_id=<?php
+                            echo urlencode($project['id']);
+                            echo isset($filter) ? '&filter='.urlencode($filter) : '' ?>" class="nav-link
                         <?php
                         if (isset($projectId)) :
                             echo ($project['id'] === $projectId) ? 'active' : '';
@@ -68,8 +73,8 @@
                     </li>
                 <?php endforeach; ?>
                 <li class="nav-item">
-                    <!-- додати bg-olive, якщо посилання активне -->
-                    <a href="#" class="nav-link">
+                    <a href="../addProject.php" class="nav-link <?php echo (str_contains($url, 'addProject.php'))
+                        ? 'bg-olive' : '' ?>">
                         <i class="nav-icon fas fa-plus"></i>
                         <p>
                             Додати проект

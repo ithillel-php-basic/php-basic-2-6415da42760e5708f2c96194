@@ -7,16 +7,16 @@ use requests\StoreTaskRequest;
 
 class AddTaskFormTemplateService extends TemplateService
 {
-    protected MainSidebarService $mainSideBar;
-    protected NavbarService $navbarService;
+    protected MainSidebarTemplateService $mainSideBar;
+    protected NavbarTemplateService $navbarService;
     protected TaskService $taskService;
 
 
     public function __construct()
     {
         parent::__construct();
-        $this->mainSideBar      = new MainSidebarService();
-        $this->navbarService    = new NavbarService();
+        $this->mainSideBar      = new MainSidebarTemplateService();
+        $this->navbarService    = new NavbarTemplateService();
         $this->taskService      = new TaskService();
     }
 

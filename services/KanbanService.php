@@ -24,6 +24,8 @@ class KanbanService extends TemplateService
             'projects'      => $this->projectService->getAll(),
             'pageTitle'     => $this->projectHandler->showTitle($this->projectService->getAll(), 'project_id'),
             'projectId'     => GlobalArrayHandler::getStringToInt('project_id'),
+            'url'           => $_SERVER['REQUEST_URI'],
+            'filter'        => $_GET['filter'] ?? null,
         ]);
     }
 }

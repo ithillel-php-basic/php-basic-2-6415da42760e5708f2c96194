@@ -11,9 +11,9 @@ use middlewares\AuthenticationMiddleware;
 use requests\StoreTaskRequest;
 use requests\UpdateTaskStatus;
 use services\AddTaskFormTemplateService;
-use services\MainSidebarService;
+use services\MainSidebarTemplateService;
 use services\MainTemplateService;
-use services\NavbarService;
+use services\NavbarTemplateService;
 use services\ProjectService;
 use services\TaskService;
 
@@ -22,8 +22,8 @@ class KanbanController extends BaseController
     use AuthenticationMiddleware;
     protected MainTemplateService $mainTemplate;
     protected AddTaskFormTemplateService $addTaskFormTemplateService;
-    protected MainSidebarService $mainSideBar;
-    protected NavbarService $navbarService;
+    protected MainSidebarTemplateService $mainSideBar;
+    protected NavbarTemplateService $navbarService;
     protected ProjectService $projectService;
     protected TaskService $taskService;
     protected Sql $task;
@@ -38,8 +38,8 @@ class KanbanController extends BaseController
         $this->taskService                  = new TaskService();
         $this->task                         = new Sql();
         $this->request                      = new StoreTaskRequest();
-        $this->mainSideBar                  = new MainSidebarService();
-        $this->navbarService                = new NavbarService();
+        $this->mainSideBar                  = new MainSidebarTemplateService();
+        $this->navbarService                = new NavbarTemplateService();
     }
 
     public function index(): string

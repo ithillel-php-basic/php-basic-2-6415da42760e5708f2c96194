@@ -1,13 +1,15 @@
 <?php
 
+use helpers\DateHandler;
+use services\TaskService;
+
 /**
  * @var TaskService $tasks
  * @var string $pageTitle
  * @var int|null $projectId
+ * @var string $url
+ * @var string $filter
  */
-
-use helpers\DateHandler;
-use services\TaskService;
 
 ?>
 <div class="content-wrapper kanban">
@@ -15,7 +17,7 @@ use services\TaskService;
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1><?php echo htmlspecialchars($pageTitle) ?></h1>
+                    <h1><?php echo htmlspecialchars($pageTitle) ?>
                 </div>
                 <div class="col-sm-6 d-none d-sm-block">
                     <ol class="breadcrumb float-sm-right">
@@ -27,10 +29,39 @@ use services\TaskService;
                 <div class="col-md-4 offset-md-4">
                     <div class="row">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <a type="button" href="#" class="btn btn-secondary active">Усі завдання</a>
-                            <a type="button" href="#" class="btn btn-default">Порядок денний</a>
-                            <a type="button" href="#" class="btn btn-default">Завтра</a>
-                            <a type="button" href="#" class="btn btn-default">Прострочені</a>
+                            <a type="button"
+                               href="/<?php echo isset($projectId) ? '?project_id='.urlencode($projectId) : '' ?>"
+                               class="btn <?php echo ($url == '/' || isset($projectId) && !isset($filter))
+                                   ? 'btn-secondary active'
+                                   : 'btn-default'?>"
+                            >Усі завдання</a>
+
+                            <a type="button"
+                               href="/?<?php echo isset($projectId)
+                                   ? 'project_id='.urlencode($projectId).'&'
+                                   : '' ?>filter=today"
+                               class="btn <?php echo (isset($filter) && $filter === 'today')
+                                   ? 'btn-secondary active'
+                                   : 'btn-default'?>"
+                            >Порядок денний</a>
+
+                            <a type="button"
+                               href="/?<?php echo isset($projectId)
+                                   ? 'project_id='.urlencode($projectId).'&'
+                                   : '' ?>filter=tomorrow"
+                               class="btn <?php echo (isset($filter) && $filter === 'tomorrow')
+                                   ? 'btn-secondary active'
+                                   : 'btn-default'?>"
+                            >Завтра</a>
+
+                            <a type="button"
+                               href="/?<?php echo isset($projectId)
+                                   ? 'project_id='.urlencode($projectId).'&'
+                                   : '' ?>filter=expired"
+                               class="btn <?php echo (isset($filter) && $filter === 'expired')
+                                   ? 'btn-secondary active'
+                                   : 'btn-default'?>"
+                            >Прострочені</a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +77,7 @@ use services\TaskService;
                         Беклог
                     </h3>
                 </div>
-                <div class="card-body connectedSortable" data-status="backlog">
+                <div class="card-body connectedSortable" data-status="backlog" >
                     <?php foreach ($tasks as $key => $task) : ?>
                         <?php if ($task['status'] === 'backlog'
                                 && isset($projectId)
