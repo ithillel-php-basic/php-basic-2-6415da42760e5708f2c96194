@@ -1,4 +1,5 @@
 <?php
+
 namespace requests;
 
 class UpdateTaskStatus extends Request
@@ -28,7 +29,7 @@ class UpdateTaskStatus extends Request
     public function rules(): array
     {
         return [
-            'id' => 'integer|exists:tasks,id,'.$this->id,
+            'id' => 'integer|exists:tasks,id,' . $this->id,
             'status' => 'in:backlog,to-do,in-progress,done'
         ];
     }

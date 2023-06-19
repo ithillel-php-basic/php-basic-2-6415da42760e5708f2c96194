@@ -1,4 +1,5 @@
 <?php
+
 namespace helpers;
 
 use Carbon\Carbon;
@@ -17,13 +18,13 @@ class DateHandler
             $diffInHours = $now->diffInHours(Carbon::parse($date), false);
             $diffInHours = max($diffInHours, 0);
 
-            return self::formatBadge($date, $diffInHours.' год', 'badge-danger');
+            return self::formatBadge($date, $diffInHours . ' год', 'badge-danger');
         }
 
         $diffInDays = $now->diffInDays(Carbon::parse($date), false);
         $diffInHours = $now->diffInHours(Carbon::parse($date), false) % 24;
 
-        return self::formatBadge($date, $diffInDays.' дн : '.$diffInHours.' год', 'badge-success');
+        return self::formatBadge($date, $diffInDays . ' дн : ' . $diffInHours . ' год', 'badge-success');
     }
 
     private static function formatBadge(string $date, string $value, string $badgeClass): string

@@ -1,4 +1,5 @@
 <?php
+
 namespace controllers;
 
 use databases\Sql;

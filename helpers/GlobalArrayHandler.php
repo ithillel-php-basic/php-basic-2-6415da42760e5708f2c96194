@@ -14,10 +14,12 @@ class GlobalArrayHandler
     public static function getStringToInt(string $key): int|null
     {
         if (isset($_GET[$key]) && !empty($_GET[$key])) {
-            if (self::isScientificNotation($_GET[$key])
+            if (
+                self::isScientificNotation($_GET[$key])
                 || self::isHexadecimal($_GET[$key])
                 || self::isBinary($_GET[$key])
-                || self::isOctal($_GET[$key])) {
+                || self::isOctal($_GET[$key])
+            ) {
                 return null;
             }
 
@@ -43,7 +45,7 @@ class GlobalArrayHandler
     {
         $queryStr = '';
         if (!empty($_SERVER['QUERY_STRING'])) {
-            return '?'.$_SERVER['QUERY_STRING'];
+            return '?' . $_SERVER['QUERY_STRING'];
         }
 
         return $queryStr;

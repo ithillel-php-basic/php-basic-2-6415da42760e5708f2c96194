@@ -1,4 +1,5 @@
 <?php
+
 namespace helpers;
 
 class EnvHandler
@@ -10,7 +11,7 @@ class EnvHandler
      */
     public static function parseFile(): array
     {
-        $env = realpath("."). "/.env";
+        $env = realpath(".") . "/.env";
         if (!file_exists($env)) {
             die('Файл .env не знайдено.');
         }

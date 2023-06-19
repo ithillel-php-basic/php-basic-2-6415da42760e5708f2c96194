@@ -10,7 +10,6 @@ use services\NavbarTemplateService;
  * @var array $oldValues
  * @var array $errors
  */
-
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -118,4 +117,3 @@ use services\NavbarTemplateService;
 <!-- AdminLTE App -->
 <script src="../static/js/adminlte.min.js"></script>
 </body>
-

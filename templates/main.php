@@ -1,4 +1,5 @@
 <?php
+
 use services\KanbanService;
 use services\MainSidebarTemplateService;
 use services\NavbarTemplateService;
@@ -8,7 +9,6 @@ use services\NavbarTemplateService;
  * @var NavbarTemplateService $navbarTemplate
  * @var MainSidebarTemplateService $mainSidebarTemplate
  */
-
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

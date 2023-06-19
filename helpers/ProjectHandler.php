@@ -1,7 +1,6 @@
 <?php
-namespace helpers;
 
-use Carbon\Carbon;
+namespace helpers;
 
 class ProjectHandler
 {

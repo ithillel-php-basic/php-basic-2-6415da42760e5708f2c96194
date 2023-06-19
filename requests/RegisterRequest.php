@@ -1,4 +1,5 @@
 <?php
+
 namespace requests;
 
 class RegisterRequest extends Request

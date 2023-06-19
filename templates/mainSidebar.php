@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var array $projects
  * @var array $user
@@ -8,8 +7,6 @@
  * @var string $url,
  * @var string $filter,
  */
-
-
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -42,7 +39,7 @@
                 <?php foreach ($projects as $key => $project) :?>
                     <?php if ($key === array_key_first($projects)) :?>
                         <li class="nav-item">
-                            <a href="/<?php echo isset($filter) ? '?filter='.$filter : ''; ?>"
+                            <a href="/<?php echo isset($filter) ? '?filter=' . $filter : ''; ?>"
                                class="nav-link <?php echo (!isset($projectId) && str_contains($url, 'filter')
                                 || $url === '/' ? 'active' : ($url === '/add.php' ? 'active' : '')); ?>">
                                 <i class="nav-icon fas fa-columns"></i>
@@ -58,7 +55,7 @@
                     <li class="nav-item">
                         <a href="/?project_id=<?php
                             echo urlencode($project['id']);
-                            echo isset($filter) ? '&filter='.urlencode($filter) : '' ?>" class="nav-link
+                            echo isset($filter) ? '&filter=' . urlencode($filter) : '' ?>" class="nav-link
                         <?php
                         if (isset($projectId)) :
                             echo ($project['id'] === $projectId) ? 'active' : '';

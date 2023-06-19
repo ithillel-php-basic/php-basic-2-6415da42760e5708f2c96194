@@ -20,6 +20,7 @@ use services\TaskService;
 class KanbanController extends BaseController
 {
     use AuthenticationMiddleware;
+
     protected MainTemplateService $mainTemplate;
     protected AddTaskFormTemplateService $addTaskFormTemplateService;
     protected MainSidebarTemplateService $mainSideBar;
@@ -92,7 +93,7 @@ class KanbanController extends BaseController
 
             $filename = md5(uniqid(rand(), true)) . '.' . $ext;
 
-            if (!move_uploaded_file($tmpFileName, 'storage/'. $filename)) {
+            if (!move_uploaded_file($tmpFileName, 'storage/' . $filename)) {
                 die('Виникла помилка при завантаженні файлу.');
             }
         }

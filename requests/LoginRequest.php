@@ -1,4 +1,5 @@
 <?php
+
 namespace requests;
 
 class LoginRequest extends Request
